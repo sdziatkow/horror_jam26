@@ -1,6 +1,9 @@
 class_name StatVal
 extends RefCounted
 
+## Emitted when _val == _MIN
+signal on_empty
+
 # Type of stat.
 enum StatType {HEALTH, STAMINA}
 var _type: StatType
@@ -27,7 +30,6 @@ func get_val() -> float: return _val
 func get_min() -> float: return _MIN
 func get_max() -> float: return _max
 #OPERATIONS----------------------------------------------------------------------
-
 func _clamp_val() -> void:
 	clamp(_val, _MIN, _max)
 
@@ -40,9 +42,12 @@ func inc(amnt: float) -> void:
 func dec(amnt: float) -> void:
 	_val -= amnt
 	_clamp_val()
+	if (_val == _MIN): on_empty.emit()
 	
 ## Set value to its maximum value.
 func fill() -> void: _val = _max
 
 ## Set value to its minimum value (0.0).
-func empty() -> void: _val = _MIN
+func empty() -> void: 
+	_val = _MIN
+	on_empty.emit()
