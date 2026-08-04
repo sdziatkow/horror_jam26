@@ -29,6 +29,9 @@ func set_max(val: float) -> void:
 func get_val() -> float: return _val
 func get_min() -> float: return _MIN
 func get_max() -> float: return _max
+#FLAGS---------------------------------------------------------------------------
+func is_empty() -> bool:
+	return (_val == _MIN)
 #OPERATIONS----------------------------------------------------------------------
 func _clamp_val() -> void:
 	clamp(_val, _MIN, _max)
