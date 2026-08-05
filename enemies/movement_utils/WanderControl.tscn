@@ -1,0 +1,10 @@
+[gd_scene format=3 uid="uid://dhhswke8w0gsv"]
+
+[ext_resource type="Script" uid="uid://vcoms27m4ohd" path="res://enemies/movement_utils/WanderControlScript.gd" id="1_xkgu0"]
+
+[node name="WanderControl" type="Node2D" unique_id=183269360]
+script = ExtResource("1_xkgu0")
+
+[node name="Timer" type="Timer" parent="." unique_id=1183953687]
+one_shot = true
+autostart = true
