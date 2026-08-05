@@ -47,7 +47,6 @@ func _move_state(delta: float) -> void:
 	# Update velocity to move toward ZERO by FRICTION * delta
 	else:
 		velocity = velocity.move_toward(Vector2.ZERO, FRICTION * delta)
-	print(velocity)
 	move_and_slide()
 	
 	# Check for a change in _mv_state

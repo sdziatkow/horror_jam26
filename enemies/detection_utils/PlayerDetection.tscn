@@ -1,0 +1,15 @@
+[gd_scene format=3 uid="uid://nnawnxf3d8t1"]
+
+[ext_resource type="Script" uid="uid://f1jt5c6cxdwc" path="res://enemies/detection_utils/PlayerDetectionScript.gd" id="1_6qq2a"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_26pnq"]
+radius = 272.0
+
+[node name="PlayerDetection" type="Area2D" unique_id=1547180563]
+collision_layer = 0
+collision_mask = 2
+script = ExtResource("1_6qq2a")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=339436955]
+shape = SubResource("CircleShape2D_26pnq")
+debug_color = Color(0.8156863, 0.40392157, 0, 0)
