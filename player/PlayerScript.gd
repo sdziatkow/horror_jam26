@@ -57,4 +57,3 @@ func _move_state(delta: float) -> void:
 	
 func _shoot_state(delta: float) -> void:
 	pass
-	

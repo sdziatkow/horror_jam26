@@ -14,3 +14,10 @@ script = ExtResource("1_3c3w1")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=775209924]
 shape = SubResource("CapsuleShape2D_26pnq")
+
+[node name="UI" type="Control" parent="." unique_id=481633784]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+metadata/_edit_use_anchors_ = true
