@@ -1,4 +1,4 @@
-[gd_scene format=3 uid="uid://ggat8p4l7ipb"]
+[gd_scene format=3 uid="uid://dyk1yf8rlb8li"]
 
 [ext_resource type="Script" uid="uid://cg1kwbfrranss" path="res://player/PlayerScript.gd" id="1_3c3w1"]
 [ext_resource type="PackedScene" uid="uid://cn63sc4h1wtfa" path="res://humanoid_sprites/BodySprite.tscn" id="2_wnvi2"]
@@ -8,8 +8,6 @@ radius = 40.0
 height = 80.0
 
 [node name="Player" type="CharacterBody2D" unique_id=506046470]
-collision_layer = 2
-collision_mask = 0
 script = ExtResource("1_3c3w1")
 
 [node name="BodySprite" parent="." unique_id=232492970 instance=ExtResource("2_wnvi2")]

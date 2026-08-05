@@ -1,0 +1,30 @@
+[gd_scene format=3 uid="uid://xcm7r5dln1eq"]
+
+[ext_resource type="Texture2D" uid="uid://c4gh462tneq7m" path="res://icon.svg" id="1_2gitb"]
+[ext_resource type="Script" path="res://car/area_2d.gd" id="2_dxy33"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_kdix0"]
+size = Vector2(277, 128)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_fx8lg"]
+size = Vector2(341, 182)
+
+[node name="Car" type="Node2D" unique_id=1687699864]
+metadata/_edit_group_ = true
+
+[node name="StaticBody2D" type="StaticBody2D" parent="." unique_id=2013118938]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D" unique_id=11981620]
+position = Vector2(-0.5, 0)
+shape = SubResource("RectangleShape2D_kdix0")
+
+[node name="Sprite2D" type="Sprite2D" parent="StaticBody2D" unique_id=1321463431]
+scale = Vector2(2.1640625, 1)
+texture = ExtResource("1_2gitb")
+
+[node name="Area2D" type="Area2D" parent="StaticBody2D" unique_id=1228847125]
+script = ExtResource("2_dxy33")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D/Area2D" unique_id=1014052888]
+position = Vector2(1.5, -1)
+shape = SubResource("RectangleShape2D_fx8lg")
