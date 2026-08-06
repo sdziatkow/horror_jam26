@@ -22,7 +22,7 @@ func _physics_process(delta: float) -> void:
 			_shoot_state(delta)
 		State.FREEZE:
 			pass
-		
+			
 func _move_state(delta: float) -> void:
 	var input_vector = Vector2.ZERO
 	
