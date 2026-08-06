@@ -38,7 +38,7 @@ func set_wander_timer(duration: int) -> void:
 func get_time_left() -> float:
 	return _timer.time_left
 	
-func is_timer_stopped() -> float:
+func is_timer_stopped() -> bool:
 	return _timer.is_stopped()
 	
 ## Updates the target pos.
