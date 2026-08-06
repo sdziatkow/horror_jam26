@@ -3,6 +3,8 @@
 [ext_resource type="Texture2D" uid="uid://c4gh462tneq7m" path="res://icon.svg" id="1_2gitb"]
 [ext_resource type="Script" uid="uid://cbeetm47im27c" path="res://car/car.gd" id="1_dxy33"]
 
+[sub_resource type="ViewportTexture" id="ViewportTexture_x5sui"]
+
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_kdix0"]
 size = Vector2(277, 128)
 
@@ -12,6 +14,14 @@ size = Vector2(341, 182)
 [node name="Car" type="Node2D" unique_id=1687699864]
 script = ExtResource("1_dxy33")
 metadata/_edit_group_ = true
+
+[node name="Button" type="Button" parent="." unique_id=1759295962]
+offset_left = -34.0
+offset_top = -112.0
+offset_right = 31.0
+offset_bottom = -81.0
+text = "Search"
+icon = SubResource("ViewportTexture_x5sui")
 
 [node name="StaticBody2D" type="StaticBody2D" parent="." unique_id=2013118938]
 
@@ -28,3 +38,5 @@ texture = ExtResource("1_2gitb")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D/Area2D" unique_id=1014052888]
 position = Vector2(1.5, -1)
 shape = SubResource("RectangleShape2D_fx8lg")
+
+[connection signal="pressed" from="Button" to="." method="_on_button_pressed"]
