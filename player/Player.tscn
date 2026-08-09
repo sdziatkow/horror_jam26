@@ -3,9 +3,9 @@
 [ext_resource type="Script" uid="uid://cg1kwbfrranss" path="res://player/PlayerScript.gd" id="1_3c3w1"]
 [ext_resource type="PackedScene" uid="uid://cn63sc4h1wtfa" path="res://humanoid_sprites/BodySprite.tscn" id="2_wnvi2"]
 
-[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_26pnq"]
-radius = 40.0
-height = 80.0
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_qq2pi"]
+radius = 19.0
+height = 52.0
 
 [node name="Player" type="CharacterBody2D" unique_id=506046470 groups=["player"]]
 script = ExtResource("1_3c3w1")
@@ -13,7 +13,8 @@ script = ExtResource("1_3c3w1")
 [node name="BodySprite" parent="." unique_id=232492970 instance=ExtResource("2_wnvi2")]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=775209924]
-shape = SubResource("CapsuleShape2D_26pnq")
+position = Vector2(-10, 3)
+shape = SubResource("CapsuleShape2D_qq2pi")
 
 [node name="UI" type="Control" parent="." unique_id=481633784]
 layout_mode = 3
