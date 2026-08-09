@@ -40,9 +40,11 @@ func _spawn_one(x_pos_px : int, y_pos_px) -> void:
 	add_child(new_zombie)
 	new_zombie.z_index = 1
 	new_zombie.position = Vector2( x_pos_px, y_pos_px)
+	_spawned_zombies.append(new_zombie)
 
 func despawn() -> void:
 	for zombie : Zombie in _spawned_zombies:
+		_spawned_zombies.erase(zombie)
 		zombie.queue_free()
 		##TODO: Don't delete zombie
 		## remove from tree, reset, and add back to pool array

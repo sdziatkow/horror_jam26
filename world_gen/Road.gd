@@ -23,6 +23,7 @@ var _move_percentage : float = 0.0
 ## Each segment will have it's own zombie spawner.
 var _zombie_spawner_scene = preload("res://world_gen/ZombieSpawner.tscn")
 var _zombie_spawners : Array[ZombieSpawner]
+var _spawner_ind : int = 0
 
 ## This is some space on the top and bottom of the map where zombies won't spawn
 var _SPAWN_VERTICAL_MARGIN : int = 100
@@ -95,6 +96,25 @@ func start_treadmill() -> void:
 func stop_treadmill() -> void:
 	_tick_timer.stop()
 	
+## Moves all the segments back by one segment length
+func _move_treadmill():
+	_player.position.x -= _segment_width
+	
+	for spawner : ZombieSpawner in _zombie_spawners:
+		spawner.position.x -= _segment_width
+	var end_spawner = _zombie_spawners[_spawner_ind]
+	
+	##TODO: Refactor this into a function
+	end_spawner.despawn()
+	end_spawner.preset_spawn()
+	
+	end_spawner.position.x = (_TOTAL_SEGMENTS - _BACK_SEGMENTS) * _segment_width
+	
+	
+	
+	## Increase spawner by 1 or reset to 0
+	_spawner_ind = (_spawner_ind + 1) % _TOTAL_SEGMENTS
+	
 ## This is the big one
 func _tick_process() -> void:
 	## Everything is decided by the player's position
@@ -118,10 +138,7 @@ func _tick_process() -> void:
 		_move_percentage = 0
 	elif _move_percentage >= 1:
 		_move_percentage = 0
-		_move_back()
+		_move_treadmill()
 
-## Moves all the segments back by one segment length
-func _move_back():
-	for node in get_children():
-		if node is Player or node is ZombieSpawner:
-			node.position.x -= _segment_width
+
+	
