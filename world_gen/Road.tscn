@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" uid="uid://b38wvk1c51xbq" path="res://world_gen/Road.gd" id="1_1lnw2"]
 [ext_resource type="Texture2D" uid="uid://coj7um2yup2tb" path="res://world_gen/road.png" id="1_htudd"]
+[ext_resource type="Texture2D" uid="uid://dlkdiunei6h3s" path="res://road.PNG" id="3_46uyx"]
 
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_170dk"]
 normal = Vector2(0, 1)
@@ -21,8 +22,15 @@ repeat_size = Vector2(1280, 0)
 repeat_times = 2
 
 [node name="RoadSprite" type="Sprite2D" parent="Parallax2D" unique_id=1337777327]
+self_modulate = Color(0.37478405, 0.4690501, 0.37489727, 1)
 position = Vector2(641, 460)
 texture = ExtResource("1_htudd")
+
+[node name="Sprite2D" type="Sprite2D" parent="Parallax2D" unique_id=371903258]
+position = Vector2(641, 457.0462)
+rotation = 1.5707964
+scale = Vector2(1.0720537, 1)
+texture = ExtResource("3_46uyx")
 
 [node name="UpperBoundary" type="StaticBody2D" parent="." unique_id=1068187116]
 
