@@ -19,6 +19,7 @@ func _ready() -> void:
 	## ROAD / SPAWNING SET-UPS
 	_road.give_camera(camera)
 	_road.give_player(player)
+	_road.treadmill_setup()
 	_road.start_treadmill()
 
 func _main() -> void:

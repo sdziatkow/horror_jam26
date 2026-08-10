@@ -39,11 +39,3 @@ shape = SubResource("WorldBoundaryShape2D_htudd")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="LeftBoundary" unique_id=899175108]
 shape = SubResource("WorldBoundaryShape2D_kflc5")
-
-[node name="TopLane" type="Line2D" parent="." unique_id=1499787001]
-visible = false
-points = PackedVector2Array(0, 355, 1280, 355)
-
-[node name="BottomLane" type="Line2D" parent="." unique_id=191882766]
-visible = false
-points = PackedVector2Array(0, 555, 1280, 555)

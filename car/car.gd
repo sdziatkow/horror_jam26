@@ -24,3 +24,7 @@ func _process(_delta: float) -> void:
 
 func _on_button_pressed() -> void:
 	print("player searched car")
+
+## Added by Caden for use in the spawner code
+func get_spawn_width() -> float:
+	return $StaticBody2D/Sprite2D.texture.get_size().x * $StaticBody2D/Sprite2D.scale.x

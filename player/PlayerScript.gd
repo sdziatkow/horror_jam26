@@ -58,3 +58,5 @@ func _move_state(delta: float) -> void:
 func _shoot_state(delta: float) -> void:
 	pass
 	
+func get_spawn_diameter() -> float:
+	return max($CollisionShape2D.shape.height, $CollisionShape2D.shape.radius * 2)

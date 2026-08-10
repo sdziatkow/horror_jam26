@@ -2,10 +2,6 @@ class_name Road
 extends Node2D
 
 
-
-
-
-
 ## Every tick, decisions about world generation are made 
 var _TICK_LEN : float = 1
 var _tick_timer : Timer = Timer.new()
@@ -20,9 +16,14 @@ var _segment_width : int
 ## everything on the map moves back (like things placed on a treadmill)
 var _move_percentage : float = 0.0
 
-## Each segment will have it's own zombie spawner.
+## Each segment will have it's own zombie spawner and car spawner.
 var _zombie_spawner_scene = preload("res://world_gen/ZombieSpawner.tscn")
 var _zombie_spawners : Array[ZombieSpawner]
+
+var _car_spawner_scene = preload("res://world_gen/CarSpawner.tscn")
+var _car_spawners : Array[CarSpawner]
+
+## Keeps track of what segment needs to be moved to front of treadmill
 var _spawner_ind : int = 0
 
 ## This is some space on the top and bottom of the map where zombies won't spawn
@@ -31,7 +32,8 @@ var _SPAWN_VERTICAL_MARGIN : int = 100
 ## The world needs to move the player back periodically
 var _player : Player
 
-
+## Seed to generate cars 
+var _next_car_seed : int = randi_range(0,3)
 
 func _ready() -> void:
 	
@@ -45,35 +47,49 @@ func _ready() -> void:
 	var sprite_pos = $Parallax2D/RoadSprite.position
 	_segment_width = sprite_size.x
 	
-	##Setting player movement boundaries 
+	## Setting player movement boundaries 
 	$UpperBoundary.position.y = 0
 	$LowerBoundary.position.y = sprite_size.y
 	$LeftBoundary.position.x = -sprite_size.x
 	
 	## The spawners are reused. Once it reaches the end, it loops around
 	## Just like if you painted a dot on a treadmill.
-	_treadmill_setup()
 	
-func _treadmill_setup() -> void:
+	
+func treadmill_setup() -> void:
 	## Setting up all the spawners
 	for i in range(_TOTAL_SEGMENTS):
-		var new_spawner : ZombieSpawner = _zombie_spawner_scene.instantiate()
-		add_child(new_spawner)
-		_zombie_spawners.append(new_spawner)
+		var new_zombie_spawner : ZombieSpawner = _zombie_spawner_scene.instantiate()
+		add_child(new_zombie_spawner)
+		_zombie_spawners.append(new_zombie_spawner)
+		
+		var new_car_spawner : CarSpawner = _car_spawner_scene.instantiate()
+		add_child(new_car_spawner)
+		_car_spawners.append(new_car_spawner)
 		
 		## Set spawn rectangle using width: road size height : road size - 2 * vertical margin 
 		var sprite_size = $Parallax2D/RoadSprite.texture.get_size()
-		new_spawner.set_spawn_rect(Rect2(0, _SPAWN_VERTICAL_MARGIN, 
+		new_zombie_spawner.set_spawn_rect(Rect2(0, _SPAWN_VERTICAL_MARGIN, 
 			sprite_size.x, sprite_size.y - 2 * _SPAWN_VERTICAL_MARGIN))
 		
+		## Set spawn lines for car spawner
+		new_car_spawner.set_lane_y_pos($TopLane.points[0].y, $BottomLane.points[0].y)
+		new_car_spawner.set_lane_length($TopLane.points[1].x - $TopLane.points[0].x)
+		new_car_spawner.set_player_clearance(_player.get_spawn_diameter())
+		
 		## Only spawn condition I made right now, just set it now
-		new_spawner.set_spawn_conditions(ZombieSpawner.SPAWN_MODES.LONE_RANGER, 1)
-		new_spawner.preset_spawn()
+		new_zombie_spawner.set_spawn_conditions(ZombieSpawner.SPAWN_MODES.LONE_RANGER, 1)
+		new_zombie_spawner.preset_spawn()
+		
+		_next_car_seed = new_car_spawner.spawn(_next_car_seed)
 		
 	## Placing spawners
 	for i in range (- _BACK_SEGMENTS, _TOTAL_SEGMENTS - _BACK_SEGMENTS):
 		_zombie_spawners[i + _BACK_SEGMENTS].position.x = i * _segment_width
 		_zombie_spawners[i + _BACK_SEGMENTS].position.y = 0
+		
+		_car_spawners[i + _BACK_SEGMENTS].position.x = i * _segment_width
+		_car_spawners[i + _BACK_SEGMENTS].position.y = 0
 	
 
 func give_camera(camera : Camera2D) -> void:
@@ -98,28 +114,37 @@ func stop_treadmill() -> void:
 	
 ## Moves all the segments back by one segment length
 func _move_treadmill():
+	
+	## Move the player back
 	_player.position.x -= _segment_width
 	
+	## Move all the spawners back
 	for spawner : ZombieSpawner in _zombie_spawners:
 		spawner.position.x -= _segment_width
-	var end_spawner = _zombie_spawners[_spawner_ind]
+	var end_zombie_spawner = _zombie_spawners[_spawner_ind]
+	
+	for spawner : CarSpawner in _car_spawners:
+		spawner.position.x -= _segment_width
+	var end_car_spawner = _car_spawners[_spawner_ind]
 	
 	##TODO: Refactor this into a function
-	end_spawner.despawn()
-	end_spawner.preset_spawn()
+	end_zombie_spawner.despawn()
+	end_zombie_spawner.preset_spawn()
 	
-	end_spawner.position.x = (_TOTAL_SEGMENTS - _BACK_SEGMENTS - 1) * _segment_width
+	end_car_spawner.despawn()
+	_next_car_seed = end_car_spawner.spawn(_next_car_seed)
 	
-	
+	## Move spawners to end
+	var end_segment_pos = (_TOTAL_SEGMENTS - _BACK_SEGMENTS - 1) * _segment_width
+	end_zombie_spawner.position.x = end_segment_pos
+	end_car_spawner.position.x = end_segment_pos
 	
 	## Increase spawner by 1 or reset to 0
 	_spawner_ind = (_spawner_ind + 1) % _TOTAL_SEGMENTS
 	
-## This is the big one
+
 func _tick_process() -> void:
-	for spawner in _zombie_spawners:
-		print(spawner.position.x)
-	print()
+
 	## Everything is decided by the player's position
 	var pos = _player.global_position.x
 	
@@ -136,12 +161,9 @@ func _tick_process() -> void:
 	elif pos >= _segment_width:
 		_move_percentage += .2 * _TICK_LEN
 	
-	## Clamping the value at zero and then deciding if to move back everything
+	## Clamping the percentage at above zero and then deciding if to move back everything
 	if _move_percentage < 0:
 		_move_percentage = 0
 	elif _move_percentage >= 1:
 		_move_percentage = 0
 		_move_treadmill()
-
-
-	
