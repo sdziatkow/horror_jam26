@@ -72,7 +72,7 @@ func _treadmill_setup() -> void:
 		
 	## Placing spawners
 	for i in range (- _BACK_SEGMENTS, _TOTAL_SEGMENTS - _BACK_SEGMENTS):
-		_zombie_spawners[i + _BACK_SEGMENTS].position.x = - i * _segment_width
+		_zombie_spawners[i + _BACK_SEGMENTS].position.x = i * _segment_width
 		_zombie_spawners[i + _BACK_SEGMENTS].position.y = 0
 	
 
@@ -108,7 +108,7 @@ func _move_treadmill():
 	end_spawner.despawn()
 	end_spawner.preset_spawn()
 	
-	end_spawner.position.x = (_TOTAL_SEGMENTS - _BACK_SEGMENTS) * _segment_width
+	end_spawner.position.x = (_TOTAL_SEGMENTS - _BACK_SEGMENTS - 1) * _segment_width
 	
 	
 	
@@ -117,6 +117,9 @@ func _move_treadmill():
 	
 ## This is the big one
 func _tick_process() -> void:
+	for spawner in _zombie_spawners:
+		print(spawner.position.x)
+	print()
 	## Everything is decided by the player's position
 	var pos = _player.global_position.x
 	

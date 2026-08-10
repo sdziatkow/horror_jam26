@@ -25,7 +25,7 @@ func preset_spawn() -> void:
 	match _preset_spawn_mode:
 		SPAWN_MODES.LONE_RANGER:
 			_spawn_one(_spawn_rect.position.x + randi_range(0, _spawn_rect.size.x), 
-				_spawn_rect.position.y + randi_range(0, _spawn_rect.size.x))
+				_spawn_rect.position.y + randi_range(0, _spawn_rect.size.y))
 		 
 	
 func set_spawn_conditions(spawn_mode : SPAWN_MODES, spawn_count_goal : int, normal_deviation : int = 0) -> bool:
