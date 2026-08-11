@@ -41,7 +41,7 @@ func spawn(seed : int) -> int:
 	var bottom_clearance : bool = (seed & (1 << 1))
 	return _place_on_line(top_clearance, _top_lane_y_pos, true) + (_place_on_line(bottom_clearance, _bottom_lane_y_pos, false) << 1)
 	
-## 4 Parameters is kinda crazy ...
+
 func _place_on_line(clearance : bool, y_pos : int, go_right : bool) -> int:
 	var next_spawn : int = _car_length / 2  if clearance else _car_length / 2 + _player_clearance
 	var final_valid_spawn : int = _lane_length - _car_length / 2
@@ -57,7 +57,7 @@ func _place_on_line(clearance : bool, y_pos : int, go_right : bool) -> int:
 			new_car.rotation = PI
 		new_car.position = Vector2(last_spawn_pos, y_pos)
 		next_spawn = last_spawn_pos + _player_clearance + _car_length
-	if last_spawn_pos < _lane_length - _player_clearance - _car_length / 2: 
+	if last_spawn_pos < final_valid_spawn - _player_clearance: 
 		return 1 
 	else: 
 		return 0  

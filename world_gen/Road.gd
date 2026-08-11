@@ -144,7 +144,6 @@ func _move_treadmill():
 	
 
 func _tick_process() -> void:
-
 	## Everything is decided by the player's position
 	var pos = _player.global_position.x
 	
