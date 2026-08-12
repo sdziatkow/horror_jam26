@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://cxlynxi30vslf"]
 
-[ext_resource type="Script" uid="uid://b38wvk1c51xbq" path="res://world_gen/Road.gd" id="1_1lnw2"]
+[ext_resource type="Script" uid="uid://b38wvk1c51xbq" path="res://world_gen/RoadScript.gd" id="1_1lnw2"]
 [ext_resource type="Texture2D" uid="uid://coj7um2yup2tb" path="res://world_gen/road.png" id="1_htudd"]
 [ext_resource type="Texture2D" uid="uid://dlkdiunei6h3s" path="res://road.PNG" id="3_46uyx"]
 
@@ -86,3 +86,6 @@ offset_right = -423.0
 offset_bottom = 493.0
 text = "-1"
 label_settings = SubResource("LabelSettings_kflc5")
+
+[node name="SpawnPoint" type="Marker2D" parent="." unique_id=2106397810]
+position = Vector2(-1100, 460)

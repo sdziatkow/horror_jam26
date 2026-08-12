@@ -36,7 +36,7 @@ var _player : Player
 var _next_car_seed : int = randi_range(0,3)
 
 func _ready() -> void:
-	
+	print("road ready")
 	## Set up the tick timer
 	add_child(_tick_timer)
 	_tick_timer.one_shot = false
@@ -103,7 +103,7 @@ func give_camera(camera : Camera2D) -> void:
 func give_player(player : Player) -> void:
 	add_child(player)
 	_player = player
-	_player.position = Vector2(200, 200)
+	_player.position = Vector2($SpawnPoint.position.x, $SpawnPoint.position.y)
 
 ## Starts the tick timer, generation, world movement, etc.
 func start_treadmill() -> void:
