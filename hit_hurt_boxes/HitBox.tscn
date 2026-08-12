@@ -1,0 +1,9 @@
+[gd_scene format=3 uid="uid://c3wry1wahq0yb"]
+
+[ext_resource type="Script" uid="uid://dentem3bwkor" path="res://hit_hurt_boxes/HitBoxScript.gd" id="1_oksg5"]
+
+[node name="HitBox" type="Area2D" unique_id=1268150102]
+script = ExtResource("1_oksg5")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1973136327]
+debug_color = Color(0.9965336, 0, 0.1937086, 0.41960785)

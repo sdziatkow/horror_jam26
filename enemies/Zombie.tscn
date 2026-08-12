@@ -4,10 +4,15 @@
 [ext_resource type="PackedScene" uid="uid://cn63sc4h1wtfa" path="res://humanoid_sprites/BodySprite.tscn" id="1_bhroy"]
 [ext_resource type="PackedScene" uid="uid://dhhswke8w0gsv" path="res://enemies/movement_utils/WanderControl.tscn" id="3_q844c"]
 [ext_resource type="PackedScene" uid="uid://nnawnxf3d8t1" path="res://enemies/detection_utils/PlayerDetection.tscn" id="4_0v2pk"]
+[ext_resource type="PackedScene" uid="uid://dpprsil3fdqi" path="res://hit_hurt_boxes/HurtBox.tscn" id="5_fu304"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_26pnq"]
 radius = 40.0
 height = 80.0
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_83hs8"]
+radius = 24.0
+height = 62.0
 
 [node name="Zombie" type="CharacterBody2D" unique_id=426221979]
 script = ExtResource("1_8jndk")
@@ -22,3 +27,13 @@ shape = SubResource("CapsuleShape2D_26pnq")
 
 [node name="PlayerDetection" parent="." unique_id=1547180563 instance=ExtResource("4_0v2pk")]
 position = Vector2(1, 1)
+
+[node name="HurtBox" parent="." unique_id=1204903978 instance=ExtResource("5_fu304")]
+collision_layer = 0
+collision_mask = 8
+
+[node name="CollisionShape2D" parent="HurtBox" index="0" unique_id=1707217229]
+position = Vector2(-16, 1)
+shape = SubResource("CapsuleShape2D_83hs8")
+
+[editable path="HurtBox"]
