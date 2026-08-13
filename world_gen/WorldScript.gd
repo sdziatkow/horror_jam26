@@ -17,8 +17,7 @@ func give_player(player : Player) -> void:
 	_player = player
 	
 func go_to_road() -> bool:
-	if (_player == null or _camera == null 
-	or _player.get_parent() != null):
+	if (_player == null or _camera == null):
 		return false
 	_road.give_camera(_camera)
 	_road.give_player(_player)

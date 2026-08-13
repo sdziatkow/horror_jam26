@@ -36,7 +36,6 @@ var _player : Player
 var _next_car_seed : int = randi_range(0,3)
 
 func _ready() -> void:
-	print("road ready")
 	## Set up the tick timer
 	add_child(_tick_timer)
 	_tick_timer.one_shot = false

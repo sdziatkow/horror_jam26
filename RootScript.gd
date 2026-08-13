@@ -1,5 +1,7 @@
 extends Node
 
+@export var _DEBUG_MODE : bool
+
 enum GAME_STATE {ON_ROAD, IN_CAR, IN_ENCOUNTER, MENU}
 var state: GAME_STATE
 
@@ -14,6 +16,7 @@ func _ready() -> void:
 	add_child(_world)
 	_player.add_child(_camera)
 	_main()
+	if _DEBUG_MODE: $CanvasLayer.add_child(load("res://debug/CommandConsole.tscn").instantiate())
 ## Called when player presses "play"
 func _main() -> void:
 	state = GAME_STATE.ON_ROAD
