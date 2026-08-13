@@ -8,7 +8,7 @@ var sp: StatVal = StatVal.new(StatVal.StatType.STAMINA, 50.0, 50.0)
 func _ready() -> void:
 	_anim_state.travel("meelee_idle")
 	$MeeleePivot/MeeleeHitBox.set_dmg(25.0)
-	hp.on_empty.connect(queue_free)
+	#hp.on_empty.connect(queue_free)
 	$HurtBox.taking_damage.connect(hp.dec)
 	
 ## General state of the player
