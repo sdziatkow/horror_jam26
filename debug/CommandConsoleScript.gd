@@ -1,10 +1,12 @@
+## Author: Cade
 class_name CommandConsole
 extends Control
 
 var _PASSWORD : String = "automagic"
 
 var _command_scripts : Dictionary[String, DebugCommandsTemplate] = {
-	"player" : PlayerCommands.new()}
+	"player" : PlayerCommands.new(),
+	"world" : WorldCommands.new()}
 
 
 @onready var _output_text_edit : TextEdit = $Output
@@ -17,16 +19,16 @@ func _ready() -> void:
 	for script : DebugCommandsTemplate in _command_scripts.values():
 		script.give_root_node(get_tree().root)
 		script.log.connect(_log_to_console)
-	$CommandLine.editing_toggled.connect(_on_edit_toggle)
-	$ClearButton.pressed.connect(func(): $Output.text = '')
+	_input_line_edit.editing_toggled.connect(_on_edit_toggle)
+	$ClearButton.pressed.connect(func(): _output_text_edit.text = '')
 	$ExitButton.pressed.connect(func(): 
-		$CommandLine.release_focus()
+		_input_line_edit.release_focus()
 		visible = false)
 	
 func _input(event: InputEvent) -> void:
 	if event is InputEventKey:
 		if Input.is_action_just_pressed("debug_key") and Input.is_key_pressed(KEY_ALT) and Input.is_key_pressed(KEY_CTRL):
-			$CommandLine.release_focus()
+			_input_line_edit.release_focus()
 			visible = not visible
 		if _editing:
 			if event.keycode == KEY_ENTER:

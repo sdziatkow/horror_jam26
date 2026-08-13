@@ -1,3 +1,4 @@
+## Author: Caden Pink
 class_name DebugCommandsTemplate
 extends RefCounted
 
