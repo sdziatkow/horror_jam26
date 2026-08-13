@@ -34,7 +34,7 @@ func is_empty() -> bool:
 	return (_val == _MIN)
 #OPERATIONS----------------------------------------------------------------------
 func _clamp_val() -> void:
-	clamp(_val, _MIN, _max)
+	_val = clamp(_val, _MIN, _max)
 
 ## Increment value by given amount.
 func inc(amnt: float) -> void:

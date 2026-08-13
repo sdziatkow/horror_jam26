@@ -1,0 +1,4 @@
+Meeelee Sprite:
+	Frames #00 - 19 = IDLE
+	Frames #20 - 39 = MOVE
+	Frames #40 - 54 = ATTACK

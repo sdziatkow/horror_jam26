@@ -81,7 +81,7 @@
 [ext_resource type="Texture2D" uid="uid://dkps78846mrkq" path="res://resources/survivor_feet_etc/feet/walk/survivor-walk_17.png" id="79_kutia"]
 [ext_resource type="Texture2D" uid="uid://p0oqj4pceci6" path="res://resources/survivor_feet_etc/feet/walk/survivor-walk_18.png" id="80_agno1"]
 [ext_resource type="Texture2D" uid="uid://bwhb1f5f0hwxw" path="res://resources/survivor_feet_etc/feet/walk/survivor-walk_19.png" id="81_vxqv8"]
-[ext_resource type="Texture2D" uid="uid://bi816cnxns4uq" path="res://resources/survivor_feet_etc/knife/idle/survivor-idle_knife_0.png" id="82_l52o2"]
+[ext_resource type="Texture2D" uid="uid://dbrg6kprvygcg" path="res://resources/sprite_sheets/player_sheets/meelee_sheet.png" id="83_06mc2"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_26pnq"]
 animations = [{
@@ -89,8 +89,8 @@ animations = [{
 "duration": 1.0,
 "texture": ExtResource("1_uk2md")
 }],
-"loop": 1,
-"name": &"Idle",
+"loop": 0,
+"name": &"idle",
 "speed": 5.0
 }, {
 "frames": [{
@@ -155,8 +155,8 @@ animations = [{
 "texture": ExtResource("21_qly6n")
 }],
 "loop": 1,
-"name": &"Run",
-"speed": 5.0
+"name": &"run",
+"speed": 16.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -220,7 +220,7 @@ animations = [{
 "texture": ExtResource("41_5genm")
 }],
 "loop": 1,
-"name": &"Strafe-L",
+"name": &"strafe-l",
 "speed": 5.0
 }, {
 "frames": [{
@@ -285,7 +285,7 @@ animations = [{
 "texture": ExtResource("61_uo1sr")
 }],
 "loop": 1,
-"name": &"Strafe-R",
+"name": &"strafe-r",
 "speed": 5.0
 }, {
 "frames": [{
@@ -350,8 +350,8 @@ animations = [{
 "texture": ExtResource("81_vxqv8")
 }],
 "loop": 1,
-"name": &"Walk",
-"speed": 5.0
+"name": &"walk",
+"speed": 16.0
 }]
 
 [node name="BodySprite" type="Node2D" unique_id=232492970]
@@ -359,8 +359,10 @@ scale = Vector2(0.5, 0.5)
 
 [node name="Feet" type="AnimatedSprite2D" parent="." unique_id=885272988]
 sprite_frames = SubResource("SpriteFrames_26pnq")
-animation = &"Walk"
-autoplay = "Walk"
+animation = &"idle"
 
-[node name="Body" type="Sprite2D" parent="." unique_id=428959657]
-texture = ExtResource("82_l52o2")
+[node name="MeeleeSprite" type="Sprite2D" parent="." unique_id=903714408]
+position = Vector2(48, 64)
+texture = ExtResource("83_06mc2")
+hframes = 4
+vframes = 14
