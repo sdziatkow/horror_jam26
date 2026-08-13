@@ -1,0 +1,55 @@
+[gd_scene format=3 uid="uid://bahs0ca67monu"]
+
+[ext_resource type="Script" uid="uid://dwj25mtq12s7t" path="res://debug/CommandConsoleScript.gd" id="1_jgnuo"]
+
+[node name="CommandConsole" type="Control" unique_id=1112581594]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_jgnuo")
+
+[node name="BG" type="ColorRect" parent="." unique_id=54961395]
+layout_mode = 0
+offset_left = 400.0
+offset_right = 890.0
+offset_bottom = 284.0
+color = Color(1, 1, 1, 0.5019608)
+
+[node name="CommandLine" type="LineEdit" parent="." unique_id=1698148819]
+z_index = 1
+layout_mode = 0
+offset_left = 405.0
+offset_top = 5.0
+offset_right = 735.0
+offset_bottom = 40.0
+clear_button_enabled = true
+
+[node name="Output" type="TextEdit" parent="." unique_id=1062275694]
+layout_mode = 0
+offset_left = 405.0
+offset_top = 44.0
+offset_right = 885.0
+offset_bottom = 279.0
+text = "Warning: This debugger was not built with efficiency in mind. When testing for efficiency, do not use this debugger.
+"
+editable = false
+wrap_mode = 1
+
+[node name="ExitButton" type="Button" parent="." unique_id=1295041097]
+layout_mode = 0
+offset_left = 820.0
+offset_top = 5.0
+offset_right = 886.0
+offset_bottom = 41.0
+text = "Exit"
+
+[node name="ClearButton" type="Button" parent="." unique_id=66303304]
+layout_mode = 0
+offset_left = 752.0
+offset_top = 5.0
+offset_right = 815.0
+offset_bottom = 41.0
+text = "Clear"

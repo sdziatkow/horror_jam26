@@ -1,0 +1,91 @@
+[gd_scene format=3 uid="uid://cxlynxi30vslf"]
+
+[ext_resource type="Script" uid="uid://b38wvk1c51xbq" path="res://world_gen/RoadScript.gd" id="1_1lnw2"]
+[ext_resource type="Texture2D" uid="uid://coj7um2yup2tb" path="res://world_gen/road.png" id="1_htudd"]
+[ext_resource type="Texture2D" uid="uid://dlkdiunei6h3s" path="res://road.PNG" id="3_46uyx"]
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_170dk"]
+normal = Vector2(0, 1)
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_htudd"]
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_kflc5"]
+normal = Vector2(1, 0)
+
+[sub_resource type="LabelSettings" id="LabelSettings_kflc5"]
+line_spacing = 0.0
+font_size = 180
+
+[node name="Road" type="Node2D" unique_id=1772541165]
+z_index = -1
+script = ExtResource("1_1lnw2")
+
+[node name="Parallax2D" type="Parallax2D" parent="." unique_id=497100063]
+z_index = -1
+repeat_size = Vector2(1280, 0)
+repeat_times = 2
+
+[node name="RoadSprite" type="Sprite2D" parent="Parallax2D" unique_id=1337777327]
+self_modulate = Color(0.37478405, 0.4690501, 0.37489727, 1)
+position = Vector2(641, 460)
+texture = ExtResource("1_htudd")
+
+[node name="Sprite2D" type="Sprite2D" parent="Parallax2D" unique_id=371903258]
+position = Vector2(641, 457.0462)
+rotation = 1.5707964
+scale = Vector2(1.0720537, 1)
+texture = ExtResource("3_46uyx")
+
+[node name="UpperBoundary" type="StaticBody2D" parent="." unique_id=1068187116]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="UpperBoundary" unique_id=115823262]
+shape = SubResource("WorldBoundaryShape2D_170dk")
+
+[node name="LowerBoundary" type="StaticBody2D" parent="." unique_id=1639753159]
+position = Vector2(0, 920)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="LowerBoundary" unique_id=31752118]
+shape = SubResource("WorldBoundaryShape2D_htudd")
+
+[node name="LeftBoundary" type="StaticBody2D" parent="." unique_id=1057575455]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="LeftBoundary" unique_id=899175108]
+shape = SubResource("WorldBoundaryShape2D_kflc5")
+
+[node name="TopLane" type="Line2D" parent="." unique_id=1499787001]
+visible = false
+points = PackedVector2Array(0, 355, 1280, 355)
+
+[node name="BottomLane" type="Line2D" parent="." unique_id=191882766]
+visible = false
+points = PackedVector2Array(0, 555, 1280, 555)
+
+[node name="Segment1" type="Label" parent="." unique_id=1816776763]
+visible = false
+offset_left = 577.0
+offset_top = 315.0
+offset_right = 917.0
+offset_bottom = 561.0
+text = "0"
+label_settings = SubResource("LabelSettings_kflc5")
+
+[node name="Segment2" type="Label" parent="." unique_id=460791630]
+visible = false
+offset_left = 1785.0
+offset_top = 315.0
+offset_right = 2125.0
+offset_bottom = 561.0
+text = "1"
+label_settings = SubResource("LabelSettings_kflc5")
+
+[node name="Segment3" type="Label" parent="." unique_id=34944199]
+visible = false
+offset_left = -763.0
+offset_top = 247.0
+offset_right = -423.0
+offset_bottom = 493.0
+text = "-1"
+label_settings = SubResource("LabelSettings_kflc5")
+
+[node name="SpawnPoint" type="Marker2D" parent="." unique_id=2106397810]
+position = Vector2(-1100, 460)

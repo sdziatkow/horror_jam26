@@ -1,0 +1,6 @@
+[gd_scene format=3 uid="uid://4r2p43p4j2q1"]
+
+[ext_resource type="Script" uid="uid://blr6ryrx7jgag" path="res://world_gen/ZombieSpawnerScript.gd" id="1_ve287"]
+
+[node name="ZombieSpawner" type="Node2D" unique_id=1110851765]
+script = ExtResource("1_ve287")

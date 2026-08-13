@@ -1,18 +1,8 @@
 [gd_scene format=3 uid="uid://dhbcms2ua8ldv"]
 
 [ext_resource type="Script" uid="uid://cr884x8n1wl22" path="res://RootScript.gd" id="1_gxo8o"]
-[ext_resource type="PackedScene" uid="uid://dyk1yf8rlb8li" path="res://player/Player.tscn" id="2_170dk"]
-[ext_resource type="PackedScene" uid="uid://xcm7r5dln1eq" path="res://car/car.tscn" id="3_170dk"]
-[ext_resource type="PackedScene" uid="uid://dbfskkptti3la" path="res://enemies/Zombie.tscn" id="3_cwqeq"]
 
 [node name="Root" type="Node" unique_id=595710365]
 script = ExtResource("1_gxo8o")
 
-[node name="Player" parent="." unique_id=506046470 instance=ExtResource("2_170dk")]
-position = Vector2(93, 286)
-
-[node name="Zombie" parent="." unique_id=426221979 instance=ExtResource("3_cwqeq")]
-position = Vector2(554, 288)
-
-[node name="Car" parent="." unique_id=1687699864 instance=ExtResource("3_170dk")]
-position = Vector2(399, 573)
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1302840079]

@@ -1,0 +1,41 @@
+[gd_scene format=3 uid="uid://cxlynxi30vslf"]
+
+[ext_resource type="Script" uid="uid://b38wvk1c51xbq" path="res://world_gen/Road.gd" id="1_1lnw2"]
+[ext_resource type="Texture2D" uid="uid://coj7um2yup2tb" path="res://world_gen/road.png" id="1_htudd"]
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_170dk"]
+normal = Vector2(0, 1)
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_htudd"]
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_kflc5"]
+normal = Vector2(1, 0)
+
+[node name="Road" type="Node2D" unique_id=1772541165]
+z_index = -1
+script = ExtResource("1_1lnw2")
+
+[node name="Parallax2D" type="Parallax2D" parent="." unique_id=497100063]
+z_index = -1
+repeat_size = Vector2(1280, 0)
+repeat_times = 2
+
+[node name="RoadSprite" type="Sprite2D" parent="Parallax2D" unique_id=1337777327]
+position = Vector2(641, 460)
+texture = ExtResource("1_htudd")
+
+[node name="UpperBoundary" type="StaticBody2D" parent="." unique_id=1068187116]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="UpperBoundary" unique_id=115823262]
+shape = SubResource("WorldBoundaryShape2D_170dk")
+
+[node name="LowerBoundary" type="StaticBody2D" parent="." unique_id=1639753159]
+position = Vector2(0, 920)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="LowerBoundary" unique_id=31752118]
+shape = SubResource("WorldBoundaryShape2D_htudd")
+
+[node name="LeftBoundary" type="StaticBody2D" parent="." unique_id=1057575455]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="LeftBoundary" unique_id=899175108]
+shape = SubResource("WorldBoundaryShape2D_kflc5")

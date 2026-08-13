@@ -5,9 +5,9 @@
 [ext_resource type="PackedScene" uid="uid://dpprsil3fdqi" path="res://hit_hurt_boxes/HurtBox.tscn" id="3_83hs8"]
 [ext_resource type="PackedScene" uid="uid://c3wry1wahq0yb" path="res://hit_hurt_boxes/HitBox.tscn" id="3_wnvi2"]
 
-[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_26pnq"]
-radius = 40.0
-height = 80.0
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_qq2pi"]
+radius = 19.0
+height = 52.0
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_x8kxw"]
 radius = 24.0
@@ -178,7 +178,8 @@ script = ExtResource("1_3c3w1")
 [node name="BodySprite" parent="." unique_id=232492970 instance=ExtResource("2_wnvi2")]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=775209924]
-shape = SubResource("CapsuleShape2D_26pnq")
+position = Vector2(-10, 3)
+shape = SubResource("CapsuleShape2D_qq2pi")
 
 [node name="HurtBox" parent="." unique_id=1204903978 instance=ExtResource("3_83hs8")]
 position = Vector2(-16, 0)
