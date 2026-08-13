@@ -18,6 +18,7 @@ radius = 24.0
 height = 104.0
 
 [sub_resource type="Animation" id="Animation_83hs8"]
+resource_name = "RESET"
 length = 0.001
 tracks/0/type = "value"
 tracks/0/imported = false
@@ -168,7 +169,7 @@ states/meelee_idle/position = Vector2(391.29282, 107.36)
 states/meelee_walk/node = SubResource("AnimationNodeAnimation_aqcbf")
 states/meelee_walk/position = Vector2(391.92, 202.4)
 transitions = ["Start", "meelee_idle", SubResource("AnimationNodeStateMachineTransition_gskgj"), "meelee_idle", "meelee_attk", SubResource("AnimationNodeStateMachineTransition_06mnu"), "meelee_attk", "meelee_idle", SubResource("AnimationNodeStateMachineTransition_mhpjh"), "meelee_idle", "meelee_walk", SubResource("AnimationNodeStateMachineTransition_ndjxb"), "meelee_walk", "meelee_idle", SubResource("AnimationNodeStateMachineTransition_5qrx2"), "meelee_idle", "End", SubResource("AnimationNodeStateMachineTransition_b32pr"), "meelee_walk", "End", SubResource("AnimationNodeStateMachineTransition_hbkom")]
-graph_offset = Vector2(0, -156.84885)
+graph_offset = Vector2(0, -5.587983)
 
 [node name="Player" type="CharacterBody2D" unique_id=506046470]
 collision_layer = 3

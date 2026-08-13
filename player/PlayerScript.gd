@@ -2,9 +2,14 @@ class_name Player
 extends CharacterBody2D
 
 @onready var _anim_state: AnimationNodeStateMachinePlayback = $AnimationTree.get("parameters/playback")
+var hp: StatVal = StatVal.new(StatVal.StatType.HEALTH, 100.0, 100.0)
+var sp: StatVal = StatVal.new(StatVal.StatType.STAMINA, 50.0, 50.0)
 
 func _ready() -> void:
 	_anim_state.travel("meelee_idle")
+	$MeeleePivot/MeeleeHitBox.set_dmg(25.0)
+	hp.on_empty.connect(queue_free)
+	$HurtBox.taking_damage.connect(hp.dec)
 	
 ## General state of the player
 enum State {MOVE, ATTACK, FREEZE}
@@ -26,15 +31,13 @@ func _physics_process(delta: float) -> void:
 @export var ACCELERATION: float = 1000.0
 @export var FRICTION: float = 500.0
 
+@export var SPRINT_COST: float = 0.50
+@export var SPRINT_REGEN: float = 0.05
+
 ## Specific move state
 enum MoveState {WALK, SPRINT}
 var _mv_state: MoveState = MoveState.WALK
 
-## Update rotation of CharacterBody2D and MeeleeHitBox based on mouse position.
-func _look_at_mouse() -> void:
-		global_rotation = (get_global_mouse_position() - global_position).angle()
-		$MeeleePivot.global_rotation = global_rotation
-			
 func _move_state(delta: float) -> void:
 	var input_vector = Vector2.ZERO
 	
@@ -49,10 +52,12 @@ func _move_state(delta: float) -> void:
 	move_and_slide()
 	
 	# Check for a change in _mv_state
-	if (Input.get_action_strength("sprint") > 0.0): 
+	if (Input.get_action_strength("sprint") > 0.0 and sp.get_val() >= SPRINT_COST): 
 		_mv_state = MoveState.SPRINT
+		sp.dec(SPRINT_COST)
 	else:
 		_mv_state = MoveState.WALK
+		sp.inc(SPRINT_REGEN)
 		
 	# Check for a attack input.
 	if (Input.get_action_strength("attack") > 0.0):
@@ -97,4 +102,23 @@ func _shoot_state(delta: float) -> void:
 	pass
 	
 func _on_attk_finished() -> void:
+	_smooth_look_at_mouse()
 	_state = State.MOVE
+	
+#UTIL----------------------------------------------------------------------------
+
+## Update rotation of CharacterBody2D.
+func _look_at_mouse() -> void:
+	global_rotation = (get_global_mouse_position() - global_position).angle()
+	
+## For adjusting back to looking at mouse when _look_at_mouse() is not active.
+func _smooth_look_at_mouse() -> void:
+	var angle: float = (get_global_mouse_position() - global_position).angle()
+	var time: float = 0.1
+	var anim: Tween = create_tween()
+	anim.tween_property(self, "global_rotation", angle, time)\
+		.set_trans(Tween.TRANS_QUAD)\
+		.set_ease(Tween.EASE_OUT)
+
+func get_spawn_diameter() -> float:
+	return max($CollisionShape2D.shape.height, $CollisionShape2D.shape.radius * 2)

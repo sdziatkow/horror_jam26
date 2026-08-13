@@ -5,6 +5,7 @@
 [ext_resource type="PackedScene" uid="uid://dhhswke8w0gsv" path="res://enemies/movement_utils/WanderControl.tscn" id="3_q844c"]
 [ext_resource type="PackedScene" uid="uid://nnawnxf3d8t1" path="res://enemies/detection_utils/PlayerDetection.tscn" id="4_0v2pk"]
 [ext_resource type="PackedScene" uid="uid://dpprsil3fdqi" path="res://hit_hurt_boxes/HurtBox.tscn" id="5_fu304"]
+[ext_resource type="PackedScene" uid="uid://c3wry1wahq0yb" path="res://hit_hurt_boxes/HitBox.tscn" id="6_fchnq"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_26pnq"]
 radius = 40.0
@@ -13,6 +14,160 @@ height = 80.0
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_83hs8"]
 radius = 24.0
 height = 62.0
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_0june"]
+radius = 24.0
+height = 104.0
+
+[sub_resource type="Animation" id="Animation_jyux7"]
+resource_name = "RESET"
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("BodySprite/MeeleeSprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("MeeleePivot/MeeleeHitBox/CollisionShape2D:disabled")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+
+[sub_resource type="Animation" id="Animation_fchnq"]
+resource_name = "meelee_attk"
+length = 0.88
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("BodySprite/MeeleeSprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.0625, 0.125, 0.1875, 0.25, 0.3125, 0.375, 0.4375, 0.5, 0.5625, 0.625, 0.6875, 0.75, 0.8125, 0.875),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("MeeleePivot/MeeleeHitBox/CollisionShape2D:disabled")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.375, 0.75),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [true, false, true]
+}
+tracks/2/type = "method"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath(".")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0.88),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"_on_attk_finished"
+}]
+}
+
+[sub_resource type="Animation" id="Animation_0june"]
+resource_name = "meelee_idle"
+length = 1.15
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("BodySprite/MeeleeSprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.0625, 0.125, 0.1875, 0.25, 0.3125, 0.375, 0.4375, 0.5, 0.5625, 0.625, 0.6875, 0.75, 0.8125, 0.875, 0.9375, 1, 1.0625, 1.125),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3, 4, 5, 6, 7, 8, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19]
+}
+
+[sub_resource type="Animation" id="Animation_2seit"]
+resource_name = "meelee_walk"
+length = 1.2
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("BodySprite/MeeleeSprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.0625, 0.125, 0.1875, 0.25, 0.3125, 0.375, 0.4375, 0.5, 0.5625, 0.625, 0.6875, 0.75, 0.8125, 0.875, 0.9375, 1, 1.0625, 1.125, 1.1875),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_jyux7"]
+_data = {
+&"RESET": SubResource("Animation_jyux7"),
+&"meelee_attk": SubResource("Animation_fchnq"),
+&"meelee_idle": SubResource("Animation_0june"),
+&"meelee_walk": SubResource("Animation_2seit")
+}
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_fchnq"]
+animation = &"meelee_attk"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_0june"]
+animation = &"meelee_idle"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_2seit"]
+animation = &"meelee_walk"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_jyux7"]
+switch_mode = 2
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_sxaoy"]
+switch_mode = 2
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_k0x1c"]
+switch_mode = 2
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_kedq5"]
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_46sqr"]
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_ub50j"]
+switch_mode = 2
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_75wvc"]
+switch_mode = 2
+
+[sub_resource type="AnimationNodeStateMachine" id="AnimationNodeStateMachine_26pnq"]
+states/Start/position = Vector2(172, 100.32)
+states/meelee_attk/node = SubResource("AnimationNodeAnimation_fchnq")
+states/meelee_attk/position = Vector2(389.04642, 36.800003)
+states/meelee_idle/node = SubResource("AnimationNodeAnimation_0june")
+states/meelee_idle/position = Vector2(388.368, 116.799995)
+states/meelee_walk/node = SubResource("AnimationNodeAnimation_2seit")
+states/meelee_walk/position = Vector2(387.6, 200)
+transitions = ["Start", "meelee_idle", SubResource("AnimationNodeStateMachineTransition_jyux7"), "meelee_idle", "meelee_walk", SubResource("AnimationNodeStateMachineTransition_sxaoy"), "meelee_walk", "meelee_idle", SubResource("AnimationNodeStateMachineTransition_k0x1c"), "meelee_idle", "meelee_attk", SubResource("AnimationNodeStateMachineTransition_kedq5"), "meelee_attk", "meelee_idle", SubResource("AnimationNodeStateMachineTransition_46sqr"), "meelee_idle", "End", SubResource("AnimationNodeStateMachineTransition_ub50j"), "meelee_walk", "End", SubResource("AnimationNodeStateMachineTransition_75wvc")]
 
 [node name="Zombie" type="CharacterBody2D" unique_id=426221979]
 script = ExtResource("1_8jndk")
@@ -36,4 +191,24 @@ collision_mask = 8
 position = Vector2(-16, 1)
 shape = SubResource("CapsuleShape2D_83hs8")
 
+[node name="MeeleePivot" type="Marker2D" parent="." unique_id=1998384340]
+
+[node name="MeeleeHitBox" parent="MeeleePivot" unique_id=1268150102 instance=ExtResource("6_fchnq")]
+position = Vector2(72, -4)
+collision_layer = 4
+collision_mask = 0
+
+[node name="CollisionShape2D" parent="MeeleePivot/MeeleeHitBox" index="0" unique_id=1973136327]
+shape = SubResource("CapsuleShape2D_0june")
+disabled = true
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=829349567]
+libraries/ = SubResource("AnimationLibrary_jyux7")
+
+[node name="AnimationTree" type="AnimationTree" parent="." unique_id=1941823507]
+tree_root = SubResource("AnimationNodeStateMachine_26pnq")
+anim_player = NodePath("../AnimationPlayer")
+
+[editable path="BodySprite"]
 [editable path="HurtBox"]
+[editable path="MeeleePivot/MeeleeHitBox"]
