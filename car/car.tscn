@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" uid="uid://cbeetm47im27c" path="res://car/car.gd" id="1_dxy33"]
 [ext_resource type="Texture2D" uid="uid://bm4yqxvh3d3uj" path="res://resources/Mini_truck.png" id="2_dxy33"]
+[ext_resource type="PackedScene" uid="uid://dpprsil3fdqi" path="res://hit_hurt_boxes/HurtBox.tscn" id="3_hkabp"]
 
 [sub_resource type="ViewportTexture" id="ViewportTexture_x5sui"]
 
@@ -10,6 +11,9 @@ size = Vector2(277, 128)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_fx8lg"]
 size = Vector2(341, 182)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_26pnq"]
+size = Vector2(264, 112)
 
 [node name="Car" type="Node2D" unique_id=1687699864]
 script = ExtResource("1_dxy33")
@@ -35,10 +39,19 @@ scale = Vector2(1.38, 1.38)
 texture = ExtResource("2_dxy33")
 
 [node name="Area2D" type="Area2D" parent="StaticBody2D" unique_id=1228847125]
-collision_mask = 0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D/Area2D" unique_id=1014052888]
 position = Vector2(1.5, -1)
 shape = SubResource("RectangleShape2D_fx8lg")
 
+[node name="HurtBox" parent="." unique_id=1204903978 instance=ExtResource("3_hkabp")]
+collision_layer = 0
+collision_mask = 12
+
+[node name="CollisionShape2D" parent="HurtBox" index="0" unique_id=1707217229]
+position = Vector2(-4, 0)
+shape = SubResource("RectangleShape2D_26pnq")
+
 [connection signal="pressed" from="Button" to="." method="_on_button_pressed"]
+
+[editable path="HurtBox"]

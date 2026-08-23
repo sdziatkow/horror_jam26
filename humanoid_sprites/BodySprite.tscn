@@ -1,5 +1,6 @@
 [gd_scene format=3 uid="uid://cn63sc4h1wtfa"]
 
+[ext_resource type="Script" uid="uid://chc8s8gkmtwx3" path="res://humanoid_sprites/BodySpriteScript.gd" id="1_g1r8o"]
 [ext_resource type="Texture2D" uid="uid://cnekfaaox3n6e" path="res://resources/survivor_feet_etc/feet/idle/survivor-idle_0.png" id="1_uk2md"]
 [ext_resource type="Texture2D" uid="uid://d2byltqnffte2" path="res://resources/survivor_feet_etc/feet/run/survivor-run_0.png" id="2_06mc2"]
 [ext_resource type="Texture2D" uid="uid://ctwnbsxtkftut" path="res://resources/survivor_feet_etc/feet/run/survivor-run_1.png" id="3_g1r8o"]
@@ -82,6 +83,7 @@
 [ext_resource type="Texture2D" uid="uid://p0oqj4pceci6" path="res://resources/survivor_feet_etc/feet/walk/survivor-walk_18.png" id="80_agno1"]
 [ext_resource type="Texture2D" uid="uid://bwhb1f5f0hwxw" path="res://resources/survivor_feet_etc/feet/walk/survivor-walk_19.png" id="81_vxqv8"]
 [ext_resource type="Texture2D" uid="uid://dbrg6kprvygcg" path="res://resources/sprite_sheets/player_sheets/meelee_sheet.png" id="83_06mc2"]
+[ext_resource type="Texture2D" uid="uid://bigigc7b6jcpj" path="res://resources/sprite_sheets/player_sheets/handgun_sheet.png" id="83_g1r8o"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_26pnq"]
 animations = [{
@@ -356,13 +358,29 @@ animations = [{
 
 [node name="BodySprite" type="Node2D" unique_id=232492970]
 scale = Vector2(0.5, 0.5)
+script = ExtResource("1_g1r8o")
 
 [node name="Feet" type="AnimatedSprite2D" parent="." unique_id=885272988]
 sprite_frames = SubResource("SpriteFrames_26pnq")
 animation = &"idle"
+frame_progress = 1.0
 
 [node name="MeeleeSprite" type="Sprite2D" parent="." unique_id=903714408]
 position = Vector2(48, 64)
 texture = ExtResource("83_06mc2")
 hframes = 4
 vframes = 14
+
+[node name="HandgunSprite" type="Sprite2D" parent="." unique_id=98659512]
+visible = false
+position = Vector2(48, 64)
+texture = ExtResource("83_g1r8o")
+hframes = 4
+vframes = 15
+
+[node name="RifleSprite" type="Sprite2D" parent="." unique_id=145489776]
+visible = false
+
+[node name="ShotgunSprite" type="Sprite2D" parent="." unique_id=1043929288]
+visible = false
+z_index = 1

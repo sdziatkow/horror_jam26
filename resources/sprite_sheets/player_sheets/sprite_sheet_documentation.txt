@@ -2,3 +2,9 @@ Meeelee Sprite:
 	Frames #00 - 19 = IDLE
 	Frames #20 - 39 = MOVE
 	Frames #40 - 54 = ATTACK
+	
+Handgun Sprite:
+	Frames #00 - 19 = IDLE
+	Frames #20 - 39 = MOVE
+	Frames #40 - 54 = RELOAD
+	Frames #55 - 57 = SHOOT

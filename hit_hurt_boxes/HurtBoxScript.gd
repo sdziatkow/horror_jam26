@@ -8,6 +8,8 @@ func _ready() -> void:
 	
 func _on_area_entered(hit_box: HitBox) -> void:
 	taking_damage.emit(hit_box.get_dmg())
+	if (hit_box.get_parent() is Bullet):
+		hit_box.get_parent().queue_free()
 	
 func toggle_invincible(b: bool) -> void:
 	$CollisionShape2D.disabled = b
