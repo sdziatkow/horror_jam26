@@ -318,11 +318,19 @@ script = ExtResource("1_3c3w1")
 
 [node name="BodySprite" parent="." unique_id=232492970 instance=ExtResource("2_wnvi2")]
 
+[node name="MeeleeSprite" parent="BodySprite" index="1" unique_id=903714408]
+visible = false
+
+[node name="HandgunSprite" parent="BodySprite" index="2" unique_id=98659512]
+visible = true
+
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=775209924]
+visible = false
 position = Vector2(-10, 3)
 shape = SubResource("CapsuleShape2D_qq2pi")
 
 [node name="HurtBox" parent="." unique_id=1204903978 instance=ExtResource("3_83hs8")]
+visible = false
 position = Vector2(-16, 0)
 collision_layer = 0
 collision_mask = 4
@@ -331,6 +339,7 @@ collision_mask = 4
 shape = SubResource("CapsuleShape2D_x8kxw")
 
 [node name="MeeleePivot" type="Marker2D" parent="." unique_id=450831925]
+visible = false
 
 [node name="MeeleeHitBox" parent="MeeleePivot" unique_id=1268150102 instance=ExtResource("3_wnvi2")]
 position = Vector2(72, -4)
