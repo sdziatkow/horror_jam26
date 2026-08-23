@@ -17,7 +17,6 @@ func _ready() -> void:
 		if _body is Player:
 			$Button.visible = false)
 	
-	
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta: float) -> void:
 	pass
