@@ -1,0 +1,156 @@
+[gd_scene format=3 uid="uid://dg2oh7nlkewyu"]
+
+[ext_resource type="Script" uid="uid://du0wrotec7um2" path="res://locations/WorldLocation.gd" id="1_x35bk"]
+[ext_resource type="Texture2D" uid="uid://cs6he28e7wge3" path="res://resources/forest_area/dirt_path.png" id="2_b01bu"]
+[ext_resource type="Texture2D" uid="uid://cub25n0yik5uq" path="res://resources/forest_area/side_of_road.png" id="3_5u4qo"]
+[ext_resource type="Texture2D" uid="uid://b3trq43ryonej" path="res://resources/forest_area/Trees-no-ground.png" id="4_irwkx"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_kflc5"]
+size = Vector2(150, 1302)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_33ali"]
+size = Vector2(150, 1299)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_8g347"]
+size = Vector2(66, 615.75)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_tawd4"]
+size = Vector2(44, 615)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_pci7e"]
+size = Vector2(638, 46.5)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_4p6ry"]
+size = Vector2(680, 1119)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_bi34l"]
+size = Vector2(682, 791)
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_kflc5"]
+
+[node name="Gulag" type="Node2D" unique_id=1657460820 node_paths=PackedStringArray("_camera_areas", "_top_left_camera_boundaries", "_bottom_right_camera_boundaries", "_spawn_point")]
+script = ExtResource("1_x35bk")
+_camera_areas = {
+"hallway": NodePath("HallwayCameraArea"),
+"room": NodePath("RoomCameraArea")
+}
+_top_left_camera_boundaries = {
+"hallway": NodePath("HallwayTopLeftCameraB"),
+"room": NodePath("RoomTopLeftCameraB")
+}
+_bottom_right_camera_boundaries = {
+"hallway": NodePath("HallwayBottomRightCameraB"),
+"room": NodePath("RoomBottomRightCameraB")
+}
+_spawn_point = NodePath("SpawnPoint")
+metadata/_custom_type_script = "uid://du0wrotec7um2"
+
+[node name="HallwayFloor" type="Sprite2D" parent="." unique_id=412782718]
+position = Vector2(640, 1256)
+texture = ExtResource("2_b01bu")
+
+[node name="SpawnPoint" type="Marker2D" parent="." unique_id=1025365917]
+position = Vector2(640, 1738)
+
+[node name="HallwayFoliageRight" type="Sprite2D" parent="." unique_id=1264209158]
+z_index = 2
+position = Vector2(775, 1255)
+rotation = 3.1415927
+texture = ExtResource("3_5u4qo")
+region_enabled = true
+region_rect = Rect2(0, 0, 250, 1280)
+
+[node name="HallwayFoliageRight2" type="Sprite2D" parent="." unique_id=1563033368]
+z_index = 2
+position = Vector2(866, 1255)
+rotation = 3.1415927
+texture = ExtResource("3_5u4qo")
+flip_v = true
+region_enabled = true
+region_rect = Rect2(0, 0, 250, 1280)
+
+[node name="HallwayFoliageLeft" type="Sprite2D" parent="." unique_id=577911888]
+z_index = 2
+position = Vector2(505, 1255)
+texture = ExtResource("3_5u4qo")
+region_enabled = true
+region_rect = Rect2(0, 0, 250, 1280)
+
+[node name="HallwayFoliageLeft2" type="Sprite2D" parent="." unique_id=1354901422]
+z_index = 2
+position = Vector2(435, 1255)
+texture = ExtResource("3_5u4qo")
+flip_v = true
+region_enabled = true
+region_rect = Rect2(0, 0, 250, 1280)
+
+[node name="RoomFloor" type="NinePatchRect" parent="." unique_id=139523207]
+offset_left = 945.0
+offset_right = 1561.0
+offset_bottom = 613.0
+rotation = 1.5707964
+texture = ExtResource("2_b01bu")
+region_rect = Rect2(130.7439, 350.6151, 79.35553, 100.47806)
+axis_stretch_horizontal = 1
+axis_stretch_vertical = 1
+metadata/_edit_use_anchors_ = true
+
+[node name="RoomFoliage" type="Sprite2D" parent="." unique_id=206195959]
+z_index = 2
+position = Vector2(650.5, 297.1)
+scale = Vector2(0.33251953, 0.31064454)
+texture = ExtResource("4_irwkx")
+
+[node name="Boundaries" type="StaticBody2D" parent="." unique_id=1238356258]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Boundaries" unique_id=866364905]
+position = Vector2(384.5, 1267)
+shape = SubResource("RectangleShape2D_kflc5")
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="Boundaries" unique_id=1595972791]
+position = Vector2(894.5, 1265.5)
+shape = SubResource("RectangleShape2D_33ali")
+
+[node name="CollisionShape2D3" type="CollisionShape2D" parent="Boundaries" unique_id=321694720]
+position = Vector2(978, 307.875)
+shape = SubResource("RectangleShape2D_8g347")
+
+[node name="CollisionShape2D4" type="CollisionShape2D" parent="Boundaries" unique_id=1202361831]
+position = Vector2(310, 307.5)
+shape = SubResource("RectangleShape2D_tawd4")
+
+[node name="CollisionShape2D5" type="CollisionShape2D" parent="Boundaries" unique_id=164348543]
+position = Vector2(638, -23.25)
+shape = SubResource("RectangleShape2D_pci7e")
+
+[node name="RoomTopLeftCameraB" type="Marker2D" parent="." unique_id=1634413102]
+position = Vector2(310, -21)
+
+[node name="RoomBottomRightCameraB" type="Marker2D" parent="." unique_id=1187731655]
+position = Vector2(991, 1895)
+
+[node name="HallwayBottomRightCameraB" type="Marker2D" parent="." unique_id=1004444521]
+position = Vector2(820, 1895)
+
+[node name="HallwayTopLeftCameraB" type="Marker2D" parent="." unique_id=122389639]
+position = Vector2(459, 2)
+
+[node name="HallwayCameraArea" type="Area2D" parent="." unique_id=1581266304]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HallwayCameraArea" unique_id=836706046]
+position = Vector2(651, 1327.5)
+shape = SubResource("RectangleShape2D_4p6ry")
+debug_color = Color(0, 0.6, 0.69803923, 0)
+
+[node name="RoomCameraArea" type="Area2D" parent="." unique_id=491182777]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="RoomCameraArea" unique_id=216238333]
+position = Vector2(653, 372.5)
+shape = SubResource("RectangleShape2D_bi34l")
+debug_color = Color(0, 0.6, 0.69803923, 0)
+
+[node name="ExitArea" type="Area2D" parent="." unique_id=765170565]
+position = Vector2(640, 1896)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ExitArea" unique_id=812727045]
+shape = SubResource("WorldBoundaryShape2D_kflc5")

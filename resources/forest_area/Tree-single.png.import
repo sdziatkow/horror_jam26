@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://coj7um2yup2tb"
-path="res://.godot/imported/road.png-1ca113bf162ba9d045b5fa398056174b.ctex"
+uid="uid://bkrbo2maedvg7"
+path="res://.godot/imported/Tree-single.png-9d10a4436f5838ffef2408d3dac6cf9a.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://world_gen/road.png"
-dest_files=["res://.godot/imported/road.png-1ca113bf162ba9d045b5fa398056174b.ctex"]
+source_file="res://resources/forest_area/Tree-single.png"
+dest_files=["res://.godot/imported/Tree-single.png-9d10a4436f5838ffef2408d3dac6cf9a.ctex"]
 
 [params]
 
