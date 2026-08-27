@@ -1,5 +1,5 @@
 class_name Road
-extends Node2D
+extends WorldLocation
 
 
 ## Every tick, decisions about world generation are made 
@@ -29,27 +29,26 @@ var _spawner_ind : int = 0
 ## This is some space on the top and bottom of the map where zombies won't spawn
 var _SPAWN_VERTICAL_MARGIN : int = 100
 
-## The world needs to move the player back periodically
-var _player : Player
 
 ## Seed to generate cars 
 var _next_car_seed : int = randi_range(0,3)
 
 func _ready() -> void:
+	super._ready()
 	## Set up the tick timer
 	add_child(_tick_timer)
 	_tick_timer.one_shot = false
 	_tick_timer.timeout.connect(_tick_process)
 	
 	##TODO: I use the sprite_size in _treadmill_setup. Maybe refactor later.
-	var sprite_size = $Parallax2D/RoadSprite.texture.get_size()
-	var sprite_pos = $Parallax2D/RoadSprite.position
+	var sprite_size = $Parallax2D/RoadSide.texture.get_size()
+	var sprite_pos = $Parallax2D/RoadSide.position
 	_segment_width = sprite_size.x
 	
 	## Setting player movement boundaries 
-	$UpperBoundary.position.y = 0
-	$LowerBoundary.position.y = sprite_size.y
-	$LeftBoundary.position.x = -sprite_size.x
+	$Boundaries/TopCollision.position.y = 0
+	$Boundaries/BottomCollision.position.y = sprite_size.y
+	$Boundaries/LeftCollision.position.x = -sprite_size.x
 	
 	## The spawners are reused. Once it reaches the end, it loops around
 	## Just like if you painted a dot on a treadmill.
@@ -67,7 +66,7 @@ func treadmill_setup() -> void:
 		_car_spawners.append(new_car_spawner)
 		
 		## Set spawn rectangle using width: road size height : road size - 2 * vertical margin 
-		var sprite_size = $Parallax2D/RoadSprite.texture.get_size()
+		var sprite_size = $Parallax2D/RoadSide.texture.get_size()
 		new_zombie_spawner.set_spawn_rect(Rect2(0, _SPAWN_VERTICAL_MARGIN, 
 			sprite_size.x, sprite_size.y - 2 * _SPAWN_VERTICAL_MARGIN))
 		
@@ -90,19 +89,6 @@ func treadmill_setup() -> void:
 		_car_spawners[i + _BACK_SEGMENTS].position.x = i * _segment_width
 		_car_spawners[i + _BACK_SEGMENTS].position.y = 0
 	
-
-func give_camera(camera : Camera2D) -> void:
-	## setting the camera boundaries equal to the player movement boundaires.
-	## Might have to refactor this later if we add decorations around the map.
-	camera.limit_top = $UpperBoundary.position.y
-	camera.limit_bottom = $LowerBoundary.position.y
-	camera.limit_left = -_segment_width
-
-##TODO: I don't want the world to own the player
-func give_player(player : Player) -> void:
-	add_child(player)
-	_player = player
-	_player.position = Vector2($SpawnPoint.position.x, $SpawnPoint.position.y)
 
 ## Starts the tick timer, generation, world movement, etc.
 func start_treadmill() -> void:
