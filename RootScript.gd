@@ -20,10 +20,6 @@ func _ready() -> void:
 ## Called when player presses "play"
 func _main() -> void:
 	state = GAME_STATE.ON_ROAD
-	_world_setup()
+	_world.setup(_player, _camera)
 	_world.go_to_road()
-	
-	
-func _world_setup() -> void:
-	_world.give_camera(_camera)
-	_world.give_player(_player)
+	#_world.go_to_gulag()

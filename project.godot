@@ -72,7 +72,7 @@ debug_key={
 [layer_names]
 
 2d_physics/layer_1="Collidable"
-2d_physics/layer_2="PlayerBody"
+2d_physics/layer_2="Player"
 2d_physics/layer_3="PlayerHurt"
 2d_physics/layer_4="EnemyHurt"
 2d_physics/layer_8="Layer 8"
