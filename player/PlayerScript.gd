@@ -6,6 +6,9 @@ var _bullet: PackedScene = preload("res://projectiles/Bullet.tscn")
 var hp: StatVal = StatVal.new(StatVal.StatType.HEALTH, 100.0, 100.0)
 var sp: StatVal = StatVal.new(StatVal.StatType.STAMINA, 50.0, 50.0)
 
+@onready var player_footsteps: AudioStreamPlayer2D = $PlayerFootsteps
+
+
 func _ready() -> void:
 	_anim_state.travel("meelee_idle")
 	$MeeleePivot/MeeleeHitBox.set_dmg(25.0)

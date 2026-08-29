@@ -1,9 +1,10 @@
 [gd_scene format=3 uid="uid://dyk1yf8rlb8li"]
 
-[ext_resource type="Script" uid="uid://cg1kwbfrranss" path="res://player/PlayerScript.gd" id="1_3c3w1"]
+[ext_resource type="Script" uid="uid://co6ei1dcal4y8" path="res://player/PlayerScript.gd" id="1_3c3w1"]
 [ext_resource type="PackedScene" uid="uid://cn63sc4h1wtfa" path="res://humanoid_sprites/BodySprite.tscn" id="2_wnvi2"]
 [ext_resource type="PackedScene" uid="uid://dpprsil3fdqi" path="res://hit_hurt_boxes/HurtBox.tscn" id="3_83hs8"]
 [ext_resource type="PackedScene" uid="uid://c3wry1wahq0yb" path="res://hit_hurt_boxes/HitBox.tscn" id="3_wnvi2"]
+[ext_resource type="AudioStream" uid="uid://disoodyumrm85" path="res://Audio/Bipedal Small Walk A.wav" id="5_x8kxw"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_qq2pi"]
 radius = 19.0
@@ -352,6 +353,9 @@ libraries/ = SubResource("AnimationLibrary_aqcbf")
 [node name="AnimationTree" type="AnimationTree" parent="." unique_id=1585630599]
 tree_root = SubResource("AnimationNodeStateMachine_x8kxw")
 anim_player = NodePath("../AnimationPlayer")
+
+[node name="PlayerFootsteps" type="AudioStreamPlayer2D" parent="." unique_id=568103314]
+stream = ExtResource("5_x8kxw")
 
 [editable path="BodySprite"]
 [editable path="HurtBox"]
