@@ -5,12 +5,15 @@ var _bullet: PackedScene = preload("res://projectiles/Bullet.tscn")
 @onready var _anim_state: AnimationNodeStateMachinePlayback = $AnimationTree.get("parameters/playback")
 var hp: StatVal = StatVal.new(StatVal.StatType.HEALTH, 100.0, 100.0)
 var sp: StatVal = StatVal.new(StatVal.StatType.STAMINA, 50.0, 50.0)
+var inv: Inventory = Inventory.new()
+var eq_slots: EquipSlots = EquipSlots.new()
 
 func _ready() -> void:
 	_anim_state.travel("meelee_idle")
-	$MeeleePivot/MeeleeHitBox.set_dmg(25.0)
 	#hp.on_empty.connect(queue_free)
 	$HurtBox.taking_damage.connect(hp.dec)
+	
+	inv.on_equipped.connect(eq_slots.equip)
 	
 ## General state of the player
 enum State {IDLE, MOVE, ATTACK, RELOAD, FREEZE}
@@ -49,6 +52,7 @@ func _input(event: InputEvent) -> void:
 			KEY_4:
 				pass
 		$BodySprite.show_sprite(_attk_state)
+		_swap_weapon()
 
 #MOVEMENT------------------------------------------------------------------------
 @export var WALK_SPEED: float = 150.0
@@ -92,7 +96,8 @@ func _move_state(delta: float) -> void:
 		
 	# Check for reload input.
 	if (_attk_state != AttackState.MEELEE and Input.get_action_strength("reload") > 0.0):
-		_state = State.RELOAD
+		if (eq_slots.has_ammo()):
+			_state = State.RELOAD
 		
 ## Move the in given direction (input_vector).
 func _on_moving(input_vector: Vector2, delta: float) -> void:
@@ -115,22 +120,29 @@ func _on_idle(delta: float) -> void:
 
 ## Determine whether the player has meelee or gun equipped and set state accordingly.
 func _attack_state(delta: float) -> void:
+	if (eq_slots.weapons[eq_slots.held_weapon].is_empty() and
+		eq_slots.weapons[eq_slots.held_weapon].is_gun()
+		): return
 	velocity = Vector2.ZERO
 	_switch_anim()
 	
 ## Instantiate a bullet scene and add it to BulletSpawn node.
 func _shoot() -> void:
+	if (eq_slots.weapons[eq_slots.held_weapon].is_empty()): return
 	var bullet: Bullet = _bullet.instantiate()
 	bullet.set_travel_vector(Vector2.from_angle(global_rotation))
 	bullet.set_origin($BulletSpawn.global_position)
+	bullet.get_node("HitBox").set_dmg(eq_slots.ammos[eq_slots.held_weapon].get_power())
+	eq_slots.weapons[eq_slots.held_weapon].dec_ammo(1)
 	$BulletSpawn/Node.add_child(bullet)
 	
 func _reload_state(delta: float) -> void:
 	velocity = Vector2.ZERO
 	_switch_anim()
+	eq_slots.weapons[eq_slots.held_weapon].load_bullets(eq_slots.ammos[eq_slots.held_weapon])
 
 func _swap_weapon() -> void:
-	pass
+	eq_slots.held_weapon = ItemEnums.AmmoType.find_key(_attk_state)
 	
 func _on_attk_finished() -> void:
 	_smooth_look_at_mouse()
@@ -160,3 +172,6 @@ func _switch_anim() -> void:
 
 func get_spawn_diameter() -> float:
 	return max($CollisionShape2D.shape.height, $CollisionShape2D.shape.radius * 2)
+	
+#INVENTORY-----------------------------------------------------------------------
+	
