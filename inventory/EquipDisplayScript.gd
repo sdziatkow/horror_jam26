@@ -6,6 +6,7 @@ func give_eq_slots(eq_slots: EquipSlots) -> void:
 	_eq_slots = eq_slots
 	_eq_slots.weapon_swapped.connect(_on_wpn_swapped)
 	_eq_slots.gun_equipped.connect(change_gun)
+	_eq_slots.ammo_equipped.connect(change_ammo)
 	_eq_slots.healer_equipped.connect(change_healer)
 	_eq_slots.no_healer.connect(hide_healer)
 
