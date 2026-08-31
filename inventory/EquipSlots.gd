@@ -5,6 +5,8 @@ signal update_meelee_dmg(dmg: float)
 signal weapon_swapped(weapon: Weapon, ammo: Ammo)
 signal gun_equipped(new_gun: Weapon)
 signal ammo_equipped(new_ammo: Ammo)
+signal healer_equipped(new_healer: Healer)
+signal no_healer(heal_type: ItemEnums.HealType)
 
 var weapons: Dictionary[ItemEnums.AmmoType, Weapon] = {
 	ItemEnums.AmmoType.MEELEE : null,
@@ -49,6 +51,7 @@ func equip(item: Item) -> void:
 		if (healers[item.heal_type] != null):
 			healers[item.heal_type].toggle_equipped(false)
 		healers[item.heal_type] = item
+		healer_equipped.emit(item)
 	
 func has_ammo() -> bool:
 	if (ammos[held_weapon] == null): return false

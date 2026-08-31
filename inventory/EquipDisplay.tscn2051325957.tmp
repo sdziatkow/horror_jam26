@@ -72,7 +72,6 @@ expand_mode = 1
 stretch_mode = 1
 
 [node name="HP" type="TextureRect" parent="Panel" unique_id=1445157634]
-visible = false
 layout_mode = 0
 offset_left = 128.0
 offset_top = 64.0
@@ -83,7 +82,6 @@ expand_mode = 1
 stretch_mode = 5
 
 [node name="SP" type="TextureRect" parent="Panel" unique_id=194875221]
-visible = false
 layout_mode = 0
 offset_left = 192.0
 offset_top = 64.0

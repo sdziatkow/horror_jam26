@@ -13,6 +13,7 @@ func _ready() -> void:
 	#hp.on_empty.connect(queue_free)
 	$HurtBox.taking_damage.connect(hp.dec)
 	inv.on_equipped.connect(eq_slots.equip)
+	eq_slots.healer_equipped.connect(_update_healer)
 	eq_slots.update_meelee_dmg.connect(_update_meelee_dmg)
 	eq_slots.swap_weapon(ItemEnums.AmmoType.MEELEE)
 
@@ -42,9 +43,10 @@ func _physics_process(delta: float) -> void:
 			
 ## For weapon swapping.
 func _input(event: InputEvent) -> void:
-	if (event.is_action_pressed("swap_weapon")):
+	if (event.is_action_released("swap_weapon")):
 		var new_state: AttackState
 		new_state = event.as_text().to_int() - 1
+		if (new_state == AttackState.RIFLE or new_state == AttackState.SHOTGUN): return
 		if (eq_slots.weapons.get(new_state) == null):
 			return
 		elif (_attk_state == new_state):
@@ -53,6 +55,23 @@ func _input(event: InputEvent) -> void:
 			_attk_state = new_state
 			$BodySprite.show_sprite(_attk_state)
 			eq_slots.swap_weapon(ItemEnums.AmmoType[ItemEnums.AmmoType.find_key(_attk_state)])
+	if (event.is_action_released("use_heal")):
+		var heal_type: ItemEnums.HealType
+		var key: String = event.as_text()
+		var healer: Healer = eq_slots.healers.get(heal_type)
+		if (key == "Z"):
+			heal_type = ItemEnums.HealType.HP
+		elif (key == "X"):
+			heal_type = ItemEnums.HealType.SP
+		healer = eq_slots.healers.get(heal_type)
+		if (healer == null): return
+		healer.use()
+		if (healer.is_empty()):
+			inv.remove_item(healer)
+			eq_slots.healers[heal_type] = null
+			eq_slots.no_healer.emit(heal_type)
+			print("no_healer")
+		
 
 #MOVEMENT------------------------------------------------------------------------
 @export var WALK_SPEED: float = 150.0
@@ -85,6 +104,7 @@ func _move_state(delta: float) -> void:
 			sp.inc(SPRINT_REGEN)
 		_on_moving(input_vector, delta)
 	else:
+		sp.inc(SPRINT_REGEN)
 		state = State.IDLE 
 		_on_idle(delta)
 	move_and_slide()
@@ -180,3 +200,11 @@ func get_spawn_diameter() -> float:
 
 func _update_meelee_dmg(dmg: float) -> void:
 	$MeeleePivot/MeeleeHitBox.set_dmg(dmg)
+	
+func _update_healer(healer: Healer) -> void:
+	var stat: StatVal
+	if (healer.heal_type == ItemEnums.HealType.HP):
+		stat = hp
+	elif (healer.heal_type == ItemEnums.HealType.SP):
+		stat = sp
+	healer.used.connect(stat.inc)

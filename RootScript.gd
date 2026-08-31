@@ -54,9 +54,16 @@ func _set_up_inv() -> void:
 	10,
 	25.0
 	)
+	var healer: Healer = ItemMaker.make_healer(
+		ItemEnums.HealType.SP,
+		"Stamina Healer",
+		3,
+		25.0
+	)
 	_player.inv.add_item(knife)
 	_player.inv.add_item(gun)
 	_player.inv.add_item(ammo)
+	_player.inv.add_item(healer)
 	_player.eq_slots.equip(knife)
 	_inv_disp.give_inventory(_player.inv)
 	_eq_disp.give_eq_slots(_player.eq_slots)
