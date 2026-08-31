@@ -18,6 +18,7 @@ func _init(type: ItemEnums.ItemType, name: String, amnt: int, power: float) -> v
 	set_name(name)
 	set_amnt(amnt)
 	set_power(power)
+	toggle_equipped(false)
 	
 #SETTERS-------------------------------------------------------------------------
 
@@ -27,7 +28,7 @@ func set_name(name: String) -> void:
 ## The amount of this item being held.
 func set_amnt(amnt: int) -> void:
 	_amnt = amnt
-	if (_amnt < 1):
+	if (is_empty()):
 		_amnt = 0
 	
 ## The healing or damage power of this item.
@@ -53,6 +54,8 @@ func get_power() -> float:
 #FLAGS---------------------------------------------------------------------------
 func is_equipped() -> bool:
 	return _equipped
+func is_empty() -> bool:
+	return (_amnt < 1)
 	
 #OPERATIONS----------------------------------------------------------------------
 
@@ -61,7 +64,7 @@ func inc_amnt(val: int) -> void:
 	
 func dec_amnt(val: int) -> void:
 	_amnt -= val
-	if (_amnt < 1):
+	if (is_empty()):
 		on_empty.emit(self)
 		_amnt = 0
 		

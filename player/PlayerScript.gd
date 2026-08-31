@@ -12,12 +12,13 @@ func _ready() -> void:
 	_anim_state.travel("meelee_idle")
 	#hp.on_empty.connect(queue_free)
 	$HurtBox.taking_damage.connect(hp.dec)
-	
 	inv.on_equipped.connect(eq_slots.equip)
-	
+	eq_slots.update_meelee_dmg.connect(_update_meelee_dmg)
+	eq_slots.swap_weapon(ItemEnums.AmmoType.MEELEE)
+
 ## General state of the player
 enum State {IDLE, MOVE, ATTACK, RELOAD, FREEZE}
-var _state = State.MOVE
+var state = State.MOVE
 
 ## Specific move state
 enum MoveState {WALK, SPRINT}
@@ -28,7 +29,7 @@ enum AttackState {MEELEE, HANDGUN, RIFLE, SHOTGUN}
 var _attk_state: AttackState = AttackState.MEELEE
 
 func _physics_process(delta: float) -> void:
-	match (_state):
+	match (state):
 		State.IDLE, State.MOVE:
 			_move_state(delta)
 			_look_at_mouse()
@@ -42,17 +43,16 @@ func _physics_process(delta: float) -> void:
 ## For weapon swapping.
 func _input(event: InputEvent) -> void:
 	if (event.is_action_pressed("swap_weapon")):
-		match (event.keycode):
-			KEY_1:
-				_attk_state = AttackState.MEELEE
-			KEY_2:
-				_attk_state = AttackState.HANDGUN
-			KEY_3:
-				pass
-			KEY_4:
-				pass
-		$BodySprite.show_sprite(_attk_state)
-		_swap_weapon()
+		var new_state: AttackState
+		new_state = event.as_text().to_int() - 1
+		if (eq_slots.weapons.get(new_state) == null):
+			return
+		elif (_attk_state == new_state):
+			return
+		else:
+			_attk_state = new_state
+			$BodySprite.show_sprite(_attk_state)
+			eq_slots.swap_weapon(ItemEnums.AmmoType[ItemEnums.AmmoType.find_key(_attk_state)])
 
 #MOVEMENT------------------------------------------------------------------------
 @export var WALK_SPEED: float = 150.0
@@ -74,7 +74,7 @@ func _move_state(delta: float) -> void:
 	# Check for movement input.
 	var moving: bool = (input_vector != Vector2.ZERO)
 	if (moving):
-		_state = State.MOVE
+		state = State.MOVE
 		
 		# Check for sprint input.
 		if (Input.get_action_strength("sprint") > 0.0 and sp.get_val() >= SPRINT_COST): 
@@ -85,19 +85,19 @@ func _move_state(delta: float) -> void:
 			sp.inc(SPRINT_REGEN)
 		_on_moving(input_vector, delta)
 	else:
-		_state = State.IDLE 
+		state = State.IDLE 
 		_on_idle(delta)
 	move_and_slide()
 	_switch_anim()
 		
 	# Check for a attack input.
 	if (Input.get_action_strength("attack") > 0.0):
-		_state = State.ATTACK
+		state = State.ATTACK
 		
 	# Check for reload input.
 	if (_attk_state != AttackState.MEELEE and Input.get_action_strength("reload") > 0.0):
-		if (eq_slots.has_ammo()):
-			_state = State.RELOAD
+		if (eq_slots.has_ammo() and not eq_slots.weapons[eq_slots.held_weapon].is_fully_loaded()):
+			state = State.RELOAD
 		
 ## Move the in given direction (input_vector).
 func _on_moving(input_vector: Vector2, delta: float) -> void:
@@ -120,33 +120,36 @@ func _on_idle(delta: float) -> void:
 
 ## Determine whether the player has meelee or gun equipped and set state accordingly.
 func _attack_state(delta: float) -> void:
-	if (eq_slots.weapons[eq_slots.held_weapon].is_empty() and
-		eq_slots.weapons[eq_slots.held_weapon].is_gun()
-		): return
+	if (eq_slots.weapons[eq_slots.held_weapon].is_gun() and
+		eq_slots.weapons[eq_slots.held_weapon].is_empty()
+	): 
+		state = State.MOVE
+		return
 	velocity = Vector2.ZERO
 	_switch_anim()
 	
 ## Instantiate a bullet scene and add it to BulletSpawn node.
 func _shoot() -> void:
-	if (eq_slots.weapons[eq_slots.held_weapon].is_empty()): return
 	var bullet: Bullet = _bullet.instantiate()
 	bullet.set_travel_vector(Vector2.from_angle(global_rotation))
 	bullet.set_origin($BulletSpawn.global_position)
-	bullet.get_node("HitBox").set_dmg(eq_slots.ammos[eq_slots.held_weapon].get_power())
-	eq_slots.weapons[eq_slots.held_weapon].dec_ammo(1)
+	bullet.get_node("HitBox").set_dmg(eq_slots.weapons[eq_slots.held_weapon].on_shoot())
 	$BulletSpawn/Node.add_child(bullet)
 	
 func _reload_state(delta: float) -> void:
+	var ammo: Ammo = eq_slots.ammos[eq_slots.held_weapon]
+	if (ammo == null): return
+	var wpn: Weapon = eq_slots.weapons[eq_slots.held_weapon]
+	wpn.load_bullets(ammo)
+	if (ammo.is_empty()):
+		inv.remove_item(ammo)
+		eq_slots.ammos[eq_slots.held_weapon] = null
 	velocity = Vector2.ZERO
 	_switch_anim()
-	eq_slots.weapons[eq_slots.held_weapon].load_bullets(eq_slots.ammos[eq_slots.held_weapon])
-
-func _swap_weapon() -> void:
-	eq_slots.held_weapon = ItemEnums.AmmoType.find_key(_attk_state)
 	
 func _on_attk_finished() -> void:
 	_smooth_look_at_mouse()
-	_state = State.MOVE
+	state = State.MOVE
 	
 #UTIL----------------------------------------------------------------------------
 
@@ -166,7 +169,7 @@ func _smooth_look_at_mouse() -> void:
 ## Play animation based on _state and _attk_state.
 func _switch_anim() -> void:
 	var prefix: String = str(AttackState.find_key(_attk_state)).to_lower()
-	var suffix: String = str(State.find_key(_state)).to_lower()
+	var suffix: String = str(State.find_key(state)).to_lower()
 	var travel_to: String = prefix + "_" + suffix
 	_anim_state.travel(travel_to)
 
@@ -174,4 +177,6 @@ func get_spawn_diameter() -> float:
 	return max($CollisionShape2D.shape.height, $CollisionShape2D.shape.radius * 2)
 	
 #INVENTORY-----------------------------------------------------------------------
-	
+
+func _update_meelee_dmg(dmg: float) -> void:
+	$MeeleePivot/MeeleeHitBox.set_dmg(dmg)
