@@ -11,6 +11,8 @@ var _camera : Camera2D = Camera2D.new()
 var _world : World = preload("res://world_gen/World.tscn").instantiate()
 var _inv_disp: InvDisplay  = preload("res://inventory/InvDisplay.tscn").instantiate()
 var _eq_disp: EquipDisplay = preload("res://inventory/EquipDisplay.tscn").instantiate()
+var _hp_bar: StatBar = preload("res://stats/StatBar.tscn").instantiate()
+var _sp_bar: StatBar = preload("res://stats/StatBar.tscn").instantiate()
 
 @onready var _ui_layer = $CanvasLayer
 
@@ -19,6 +21,7 @@ func _ready() -> void:
 	add_child(_world)
 	_player.add_child(_camera)
 	_set_up_inv()
+	_set_up_stat_bars()
 	_main()
 	if _DEBUG_MODE: $CanvasLayer.add_child(load("res://debug/CommandConsole.tscn").instantiate())
 ## Called when player presses "play"
@@ -91,4 +94,11 @@ func pause_game() -> void:
 	state = GAME_STATE.MENU
 	_player.state = Player.State.FREEZE
 	
-		
+func _set_up_stat_bars() -> void:
+	_hp_bar.give_stat(_player.hp)
+	_sp_bar.give_stat(_player.sp)
+	_ui_layer.add_child(_hp_bar)
+	_ui_layer.add_child(_sp_bar)
+	_hp_bar.set_up()
+	_sp_bar.set_up()
+	_sp_bar.global_position.y += _hp_bar.size.y + 5
