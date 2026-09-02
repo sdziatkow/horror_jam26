@@ -3,6 +3,8 @@ extends RefCounted
 
 ## Emitted when _val == _MIN
 signal on_empty
+signal val_changed(new_val: float)
+signal max_changed(new_max: float)
 
 # Type of stat.
 enum StatType {HEALTH, STAMINA}
@@ -25,16 +27,21 @@ func set_val(val: float) -> void:
 func set_max(val: float) -> void:
 	_max = val
 	_clamp_val()
+	max_changed.emit(_max)
+	
 #GETTERS-------------------------------------------------------------------------
 func get_val() -> float: return _val
 func get_min() -> float: return _MIN
 func get_max() -> float: return _max
 #FLAGS---------------------------------------------------------------------------
+func is_full() -> bool:
+	return (_val == _max)
 func is_empty() -> bool:
 	return (_val == _MIN)
 #OPERATIONS----------------------------------------------------------------------
 func _clamp_val() -> void:
 	_val = clamp(_val, _MIN, _max)
+	val_changed.emit(_val)
 
 ## Increment value by given amount.
 func inc(amnt: float) -> void:
@@ -48,9 +55,12 @@ func dec(amnt: float) -> void:
 	if (_val == _MIN): on_empty.emit()
 	
 ## Set value to its maximum value.
-func fill() -> void: _val = _max
+func fill() -> void: 
+	_val = _max
+	val_changed.emit(_val)
 
 ## Set value to its minimum value (0.0).
 func empty() -> void: 
 	_val = _MIN
 	on_empty.emit()
+	val_changed.emit(_val)
