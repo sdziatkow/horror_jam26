@@ -43,7 +43,7 @@ func _physics_process(delta: float) -> void:
 			_reload_state(delta)
 		State.FREEZE:
 			pass
-			
+		
 ## For weapon swapping.
 func _input(event: InputEvent) -> void:
 	if (event.is_action_released("swap_weapon")):
@@ -211,3 +211,7 @@ func _update_healer(healer: Healer) -> void:
 	elif (healer.heal_type == ItemEnums.HealType.SP):
 		stat = sp
 	healer.used.connect(stat.inc)
+
+
+func _on_footstep_timer_timeout() -> void:
+	player_footsteps.play()

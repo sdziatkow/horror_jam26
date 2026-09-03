@@ -357,6 +357,12 @@ anim_player = NodePath("../AnimationPlayer")
 [node name="PlayerFootsteps" type="AudioStreamPlayer2D" parent="." unique_id=568103314]
 stream = ExtResource("5_x8kxw")
 
+[node name="FootstepTimer" type="Timer" parent="." unique_id=1479384367]
+wait_time = 0.8
+autostart = true
+
+[connection signal="timeout" from="FootstepTimer" to="." method="_on_footstep_timer_timeout"]
+
 [editable path="BodySprite"]
 [editable path="HurtBox"]
 [editable path="MeeleePivot/MeeleeHitBox"]
