@@ -46,14 +46,14 @@ func _set_up_inv() -> void:
 	0
 	)
 	var gun: Weapon = ItemMaker.make_weapon(
-	ItemEnums.AmmoType.HANDGUN,
-	"Handgun",
+	ItemEnums.AmmoType.SHOTGUN,
+	"Shotgun",
 	0.0,
 	5
 	)
 	var ammo: Ammo = ItemMaker.make_ammo(
-	ItemEnums.AmmoType.HANDGUN,
-	"Handgun Ammo",
+	ItemEnums.AmmoType.SHOTGUN,
+	"Shotgun Ammo",
 	10,
 	25.0
 	)

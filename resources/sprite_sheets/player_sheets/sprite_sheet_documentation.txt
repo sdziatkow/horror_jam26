@@ -8,3 +8,9 @@ Handgun Sprite:
 	Frames #20 - 39 = MOVE
 	Frames #40 - 54 = RELOAD
 	Frames #55 - 57 = SHOOT
+	
+Shotgun Sprite:
+	Frames #00 - 19 = IDLE
+	Frames #20 - 39 = MOVE
+	Frames #40 - 59 = RELOAD
+	Frames #60 - 62 = SHOOT
