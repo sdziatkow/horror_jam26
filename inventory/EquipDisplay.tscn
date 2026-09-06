@@ -4,6 +4,8 @@
 [ext_resource type="Script" uid="uid://bx5libjt6upjb" path="res://inventory/EquipDisplayScript.gd" id="1_40kki"]
 [ext_resource type="Texture2D" uid="uid://oxg38uk20elo" path="res://resources/survivor_body/images/pistol.png" id="2_8btnb"]
 [ext_resource type="Texture2D" uid="uid://o2fhpc1gpspy" path="res://resources/bullet.png" id="4_cddgr"]
+[ext_resource type="Texture2D" uid="uid://d0ultvpiv2np1" path="res://resources/survivor_body/images/rifle.png" id="4_tyc6b"]
+[ext_resource type="Texture2D" uid="uid://81aybt1niveg" path="res://resources/survivor_body/images/shotgun.png" id="5_er4mg"]
 [ext_resource type="Texture2D" uid="uid://bjd7bf4f7fteq" path="res://resources/Health-1.png" id="5_k48pj"]
 
 [node name="EquipDisplay" type="Control" unique_id=489245578]
@@ -44,11 +46,17 @@ layout_mode = 0
 offset_left = 64.0
 offset_right = 128.0
 offset_bottom = 64.0
+texture = ExtResource("4_tyc6b")
+expand_mode = 1
+stretch_mode = 5
 
 [node name="SHOTGUN" type="TextureRect" parent="Panel" unique_id=1304112718]
 layout_mode = 0
 offset_right = 64.0
 offset_bottom = 64.0
+texture = ExtResource("5_er4mg")
+expand_mode = 1
+stretch_mode = 5
 
 [node name="AMMO" type="TextureRect" parent="Panel" unique_id=1274288519]
 layout_mode = 0

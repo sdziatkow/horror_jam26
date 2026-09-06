@@ -4,6 +4,7 @@
 [ext_resource type="PackedScene" uid="uid://cn63sc4h1wtfa" path="res://humanoid_sprites/BodySprite.tscn" id="2_wnvi2"]
 [ext_resource type="PackedScene" uid="uid://dpprsil3fdqi" path="res://hit_hurt_boxes/HurtBox.tscn" id="3_83hs8"]
 [ext_resource type="PackedScene" uid="uid://c3wry1wahq0yb" path="res://hit_hurt_boxes/HitBox.tscn" id="3_wnvi2"]
+[ext_resource type="Script" uid="uid://bil43xbc7jtj7" path="res://player/BulletSpawnScript.gd" id="5_aqcbf"]
 [ext_resource type="AudioStream" uid="uid://disoodyumrm85" path="res://Audio/Bipedal Small Walk A.wav" id="5_x8kxw"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_qq2pi"]
@@ -44,6 +45,18 @@ tracks/1/keys = {
 "transitions": PackedFloat32Array(1),
 "update": 1,
 "values": [true]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("BodySprite/ShotgunSprite:frame")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [58]
 }
 
 [sub_resource type="Animation" id="Animation_06mnu"]
@@ -222,6 +235,103 @@ tracks/0/keys = {
 "values": [20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39]
 }
 
+[sub_resource type="Animation" id="Animation_b32pr"]
+resource_name = "shotgun_shoot"
+length = 0.12999999999999998
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("BodySprite/ShotgunSprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.0625, 0.125),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [60, 61, 62]
+}
+tracks/1/type = "method"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.13),
+"transitions": PackedFloat32Array(1, 1),
+"values": [{
+"args": [],
+"method": &"_shoot"
+}, {
+"args": [],
+"method": &"_on_attk_finished"
+}]
+}
+
+[sub_resource type="Animation" id="Animation_hbkom"]
+resource_name = "shotgun_idle"
+length = 1.15
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("BodySprite/ShotgunSprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.0625, 0.125, 0.1875, 0.25, 0.3125, 0.375, 0.4375, 0.5, 0.5625, 0.625, 0.6875, 0.75, 0.8125, 0.875, 0.9375, 1, 1.0625, 1.125),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3, 4, 5, 6, 7, 8, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19]
+}
+
+[sub_resource type="Animation" id="Animation_d4g0h"]
+resource_name = "shotgun_move"
+length = 1.2
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("BodySprite/ShotgunSprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.0625, 0.125, 0.1875, 0.25, 0.3125, 0.375, 0.4375, 0.5, 0.5625, 0.625, 0.6875, 0.75, 0.8125, 0.875, 0.9375, 1, 1.0625, 1.125, 1.1875),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39]
+}
+
+[sub_resource type="Animation" id="Animation_v4f8b"]
+resource_name = "shotgun_reload"
+length = 1.2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("BodySprite/ShotgunSprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.0625, 0.125, 0.1875, 0.25, 0.3125, 0.375, 0.4375, 0.5, 0.5625, 0.625, 0.6875, 0.75, 0.8125, 0.875, 0.9375, 1, 1.0625, 1.125, 1.1875),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59]
+}
+tracks/1/type = "method"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(1.2),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"_on_attk_finished"
+}]
+}
+
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_aqcbf"]
 _data = {
 &"RESET": SubResource("Animation_83hs8"),
@@ -231,7 +341,11 @@ _data = {
 &"handgun_reload": SubResource("Animation_ndjxb"),
 &"meelee_attack": SubResource("Animation_aqcbf"),
 &"meelee_idle": SubResource("Animation_x8kxw"),
-&"meelee_move": SubResource("Animation_gskgj")
+&"meelee_move": SubResource("Animation_gskgj"),
+&"shotgun_attack": SubResource("Animation_b32pr"),
+&"shotgun_idle": SubResource("Animation_hbkom"),
+&"shotgun_move": SubResource("Animation_d4g0h"),
+&"shotgun_reload": SubResource("Animation_v4f8b")
 }
 
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_06mnu"]
@@ -254,6 +368,18 @@ animation = &"meelee_idle"
 
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_aqcbf"]
 animation = &"meelee_move"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_5qrx2"]
+animation = &"shotgun_attack"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_b32pr"]
+animation = &"shotgun_idle"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_hbkom"]
+animation = &"shotgun_move"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_d4g0h"]
+animation = &"shotgun_reload"
 
 [sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_gskgj"]
 switch_mode = 2
@@ -292,6 +418,26 @@ switch_mode = 2
 [sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_yu5hk"]
 switch_mode = 2
 
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_q6miu"]
+switch_mode = 2
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_mlfor"]
+switch_mode = 2
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_2m0d2"]
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_8nth8"]
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_8tqfn"]
+switch_mode = 2
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_stbqk"]
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_y617q"]
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_8eyfg"]
+switch_mode = 2
+
 [sub_resource type="AnimationNodeStateMachine" id="AnimationNodeStateMachine_x8kxw"]
 reset_ends = true
 states/End/position = Vector2(980.8, 101.59927)
@@ -310,14 +456,25 @@ states/meelee_idle/node = SubResource("AnimationNodeAnimation_x8kxw")
 states/meelee_idle/position = Vector2(391.23447, 107.53408)
 states/meelee_move/node = SubResource("AnimationNodeAnimation_aqcbf")
 states/meelee_move/position = Vector2(389.42398, 206.4)
-transitions = ["Start", "meelee_idle", SubResource("AnimationNodeStateMachineTransition_gskgj"), "meelee_idle", "meelee_attack", SubResource("AnimationNodeStateMachineTransition_06mnu"), "meelee_attack", "meelee_idle", SubResource("AnimationNodeStateMachineTransition_mhpjh"), "meelee_idle", "meelee_move", SubResource("AnimationNodeStateMachineTransition_ndjxb"), "meelee_move", "meelee_idle", SubResource("AnimationNodeStateMachineTransition_5qrx2"), "meelee_idle", "End", SubResource("AnimationNodeStateMachineTransition_b32pr"), "Start", "handgun_idle", SubResource("AnimationNodeStateMachineTransition_hbkom"), "handgun_idle", "handgun_reload", SubResource("AnimationNodeStateMachineTransition_d4g0h"), "handgun_reload", "handgun_idle", SubResource("AnimationNodeStateMachineTransition_v4f8b"), "handgun_attack", "handgun_idle", SubResource("AnimationNodeStateMachineTransition_t8epa"), "handgun_idle", "handgun_attack", SubResource("AnimationNodeStateMachineTransition_w24id"), "handgun_move", "handgun_idle", SubResource("AnimationNodeStateMachineTransition_uewl2"), "handgun_idle", "handgun_move", SubResource("AnimationNodeStateMachineTransition_ofhxi"), "handgun_idle", "End", SubResource("AnimationNodeStateMachineTransition_yu5hk")]
-graph_offset = Vector2(0, -12.237448)
+states/shotgun_attack/node = SubResource("AnimationNodeAnimation_5qrx2")
+states/shotgun_attack/position = Vector2(573.04, -154.71881)
+states/shotgun_idle/node = SubResource("AnimationNodeAnimation_b32pr")
+states/shotgun_idle/position = Vector2(388.05356, -152.95882)
+states/shotgun_move/node = SubResource("AnimationNodeAnimation_hbkom")
+states/shotgun_move/position = Vector2(390.33636, -267.35883)
+states/shotgun_reload/node = SubResource("AnimationNodeAnimation_d4g0h")
+states/shotgun_reload/position = Vector2(189.84003, -153.75882)
+transitions = ["Start", "meelee_idle", SubResource("AnimationNodeStateMachineTransition_gskgj"), "meelee_idle", "meelee_attack", SubResource("AnimationNodeStateMachineTransition_06mnu"), "meelee_attack", "meelee_idle", SubResource("AnimationNodeStateMachineTransition_mhpjh"), "meelee_idle", "meelee_move", SubResource("AnimationNodeStateMachineTransition_ndjxb"), "meelee_move", "meelee_idle", SubResource("AnimationNodeStateMachineTransition_5qrx2"), "meelee_idle", "End", SubResource("AnimationNodeStateMachineTransition_b32pr"), "Start", "handgun_idle", SubResource("AnimationNodeStateMachineTransition_hbkom"), "handgun_idle", "handgun_reload", SubResource("AnimationNodeStateMachineTransition_d4g0h"), "handgun_reload", "handgun_idle", SubResource("AnimationNodeStateMachineTransition_v4f8b"), "handgun_attack", "handgun_idle", SubResource("AnimationNodeStateMachineTransition_t8epa"), "handgun_idle", "handgun_attack", SubResource("AnimationNodeStateMachineTransition_w24id"), "handgun_move", "handgun_idle", SubResource("AnimationNodeStateMachineTransition_uewl2"), "handgun_idle", "handgun_move", SubResource("AnimationNodeStateMachineTransition_ofhxi"), "handgun_idle", "End", SubResource("AnimationNodeStateMachineTransition_yu5hk"), "Start", "shotgun_idle", SubResource("AnimationNodeStateMachineTransition_q6miu"), "shotgun_idle", "End", SubResource("AnimationNodeStateMachineTransition_mlfor"), "shotgun_move", "shotgun_idle", SubResource("AnimationNodeStateMachineTransition_2m0d2"), "shotgun_idle", "shotgun_move", SubResource("AnimationNodeStateMachineTransition_8nth8"), "shotgun_reload", "shotgun_idle", SubResource("AnimationNodeStateMachineTransition_8tqfn"), "shotgun_idle", "shotgun_reload", SubResource("AnimationNodeStateMachineTransition_stbqk"), "shotgun_idle", "shotgun_attack", SubResource("AnimationNodeStateMachineTransition_y617q"), "shotgun_attack", "shotgun_idle", SubResource("AnimationNodeStateMachineTransition_8eyfg")]
+graph_offset = Vector2(0, -436.1122)
 
 [node name="Player" type="CharacterBody2D" unique_id=506046470]
 collision_layer = 3
 script = ExtResource("1_3c3w1")
 
 [node name="BodySprite" parent="." unique_id=232492970 instance=ExtResource("2_wnvi2")]
+
+[node name="ShotgunSprite" parent="BodySprite" index="4" unique_id=1043929288]
+frame = 58
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=775209924]
 position = Vector2(-10, 3)
@@ -343,7 +500,8 @@ shape = SubResource("CapsuleShape2D_83hs8")
 disabled = true
 
 [node name="BulletSpawn" type="Marker2D" parent="." unique_id=754150290]
-position = Vector2(54, 24)
+position = Vector2(80, 16)
+script = ExtResource("5_aqcbf")
 
 [node name="Node" type="Node" parent="BulletSpawn" unique_id=2012688003]
 

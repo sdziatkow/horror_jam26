@@ -84,6 +84,7 @@
 [ext_resource type="Texture2D" uid="uid://bwhb1f5f0hwxw" path="res://resources/survivor_feet_etc/feet/walk/survivor-walk_19.png" id="81_vxqv8"]
 [ext_resource type="Texture2D" uid="uid://dbrg6kprvygcg" path="res://resources/sprite_sheets/player_sheets/meelee_sheet.png" id="83_06mc2"]
 [ext_resource type="Texture2D" uid="uid://bigigc7b6jcpj" path="res://resources/sprite_sheets/player_sheets/handgun_sheet.png" id="83_g1r8o"]
+[ext_resource type="Texture2D" uid="uid://dobc3xdj1jju7" path="res://resources/sprite_sheets/player_sheets/shotgun_sheet.png" id="85_cd1dk"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_26pnq"]
 animations = [{
@@ -366,6 +367,7 @@ animation = &"idle"
 frame_progress = 1.0
 
 [node name="MeeleeSprite" type="Sprite2D" parent="." unique_id=903714408]
+visible = false
 position = Vector2(48, 64)
 texture = ExtResource("83_06mc2")
 hframes = 4
@@ -382,5 +384,8 @@ vframes = 15
 visible = false
 
 [node name="ShotgunSprite" type="Sprite2D" parent="." unique_id=1043929288]
-visible = false
 z_index = 1
+position = Vector2(48, 64)
+texture = ExtResource("85_cd1dk")
+hframes = 4
+vframes = 16

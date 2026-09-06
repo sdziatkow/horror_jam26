@@ -49,15 +49,17 @@ func _input(event: InputEvent) -> void:
 	if (event.is_action_released("swap_weapon")):
 		var new_state: AttackState
 		new_state = event.as_text().to_int() - 1
-		if (new_state == AttackState.RIFLE or new_state == AttackState.SHOTGUN): return
+		if (new_state == AttackState.RIFLE): return
 		if (eq_slots.weapons.get(new_state) == null):
 			return
 		elif (_attk_state == new_state):
 			return
 		else:
 			_attk_state = new_state
+			$BulletSpawn.set_pos(_attk_state)
 			$BodySprite.show_sprite(_attk_state)
 			eq_slots.swap_weapon(ItemEnums.AmmoType[ItemEnums.AmmoType.find_key(_attk_state)])
+			
 	if (event.is_action_released("use_heal")):
 		var heal_type: ItemEnums.HealType
 		var key: String = event.as_text()
@@ -153,11 +155,32 @@ func _attack_state(delta: float) -> void:
 	
 ## Instantiate a bullet scene and add it to BulletSpawn node.
 func _shoot() -> void:
+	if (eq_slots.weapons[eq_slots.held_weapon].ammo_type == ItemEnums.AmmoType.SHOTGUN):
+		_shoot_shotgun()
+	else:
+		_shoot_normal()
+		
+	
+func _shoot_normal() -> void:
 	var bullet: Bullet = _bullet.instantiate()
 	bullet.set_travel_vector(Vector2.from_angle(global_rotation))
 	bullet.set_origin($BulletSpawn.global_position)
 	bullet.get_node("HitBox").set_dmg(eq_slots.weapons[eq_slots.held_weapon].on_shoot())
 	$BulletSpawn/Node.add_child(bullet)
+	
+func _shoot_shotgun() -> void:
+	var bullets: Array[Bullet] = []
+	const TOTAL_BULLETS: float = 5
+	for i in TOTAL_BULLETS:
+		var b: Bullet = _bullet.instantiate()
+		var v: Vector2 = Vector2.from_angle(global_rotation + ((i - 1.0) / (TOTAL_BULLETS + 1.0)))
+		b.set_travel_vector(v)
+		b.set_origin($BulletSpawn.global_position)
+		b.get_node("HitBox").set_dmg(eq_slots.weapons[eq_slots.held_weapon].get_dmg() / TOTAL_BULLETS)
+		bullets.append(b)
+	for i in bullets:
+		$BulletSpawn/Node.add_child(i)
+	eq_slots.weapons[eq_slots.held_weapon].on_shoot()
 	
 func _reload_state(delta: float) -> void:
 	var ammo: Ammo = eq_slots.ammos[eq_slots.held_weapon]

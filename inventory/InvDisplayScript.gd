@@ -76,7 +76,6 @@ func _handle_item_selection(idx: int) -> void:
 	var disp_info: Dictionary[String, String] = _curr_item.disp_info()
 	var row: int = 0
 	for key in disp_info:
-		print(str(row) + str(row + 1) + ", " + key + ", " + disp_info[key])
 		_item_stats.get_child(row).text = key
 		_item_stats.get_child(row + 1).text = "|" + disp_info[key]
 		row += 2
