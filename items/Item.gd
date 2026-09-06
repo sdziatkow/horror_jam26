@@ -12,6 +12,7 @@ var _name: String
 var _amnt: int
 var _power: float
 var _equipped: bool
+var _disp_info: Dictionary[String, String]
 
 func _init(type: ItemEnums.ItemType, name: String, amnt: int, power: float) -> void:
 	item_type = type
@@ -73,3 +74,7 @@ func _to_string() -> String:
 	out += "Name: " + get_name() +"|Amount: " + str(get_amnt()) + "|"
 	out += "Power: " + "%.2f" % get_power()
 	return out
+
+@abstract func _set_disp_info() -> void
+	
+@abstract func disp_info() -> Dictionary[String, String]
