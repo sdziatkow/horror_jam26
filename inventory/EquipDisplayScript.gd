@@ -4,6 +4,8 @@ extends Control
 var _eq_slots: EquipSlots = null
 func give_eq_slots(eq_slots: EquipSlots) -> void:
 	_eq_slots = eq_slots
+	
+	# Update equip display when swapping weapon and equipping items.
 	_eq_slots.weapon_swapped.connect(_on_wpn_swapped)
 	_eq_slots.gun_equipped.connect(change_gun)
 	_eq_slots.ammo_equipped.connect(change_ammo)
@@ -19,7 +21,7 @@ func _ready() -> void:
 
 ## Change the color of the newly equippled weapon.
 func _on_wpn_swapped(wpn: Weapon, ammo: Ammo) -> void:
-	var disp_num: int = wpn.ammo_type + 1
+	var disp_num: int = wpn.ammo_type + 1 # The label name corresponds with ItemEnums.AmmoType.
 	var label: Label = $Panel.get_node(str(disp_num))
 	label.add_theme_color_override("font_color", Color(0, 1, 0.4))
 	for child in $Panel.get_children():
@@ -41,7 +43,7 @@ func change_gun(gun: Weapon):
 		if (not gun.ammo_changed.is_connected(update_gun_ammo)):
 			gun.ammo_changed.connect(update_gun_ammo)
 			gun.on_loading.connect(update_eq_ammo)
-		update_gun_ammo(gun.get_curr_ammo(), gun.get_capacity())
+		update_gun_ammo(gun.get_amnt_loaded(), gun.get_capacity())
 		
 func show_gun_ammo() -> void:
 	$Panel/AmmoLoaded.show()
@@ -68,6 +70,7 @@ func hide_healer(type: ItemEnums.HealType) -> void:
 		
 #AMMO-DISPLAY--------------------------------------------------------------------
 
+## If currently equipped gun matches given ammo type then display given ammo. 
 func change_ammo(ammo: Ammo):
 	if (ammo.ammo_type == _eq_slots.held_weapon):
 		update_eq_ammo(ammo.get_amnt())
